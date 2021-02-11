@@ -1,12 +1,21 @@
 package data
 
+import "fmt"
+
+func Listdd() {
+	lista := NewStoresList()
+	lista.setStore("nombre", "descrip", "contac", 5, "dep")
+	fmt.Println(lista.Start)
+}
+
 type vstore struct {
-	previous      *vstore
+	Previous      *vstore
 	Next          *vstore
-	name          string
-	description   string
-	contact       string
-	qualification int
+	Name          string
+	Description   string
+	Contact       string
+	Qualification int
+	Department    string
 }
 
 type stores struct {
@@ -16,20 +25,20 @@ type stores struct {
 }
 
 //Crear Lista de tiendas
-func NewList() *stores {
+func NewStoresList() *stores {
 	return &stores{nil, nil, 0}
 }
 
 //Insertar nueva tienda
-func (stores *stores) setStore(name string, description string, contact string, qualification int) {
-	newStore := &vstore{nil, nil, name, description, contact, qualification}
+func (stores *stores) setStore(name string, description string, contact string, qualification int, dep string) {
+	newStore := &vstore{nil, nil, name, description, contact, qualification, dep}
 
 	if stores.Start == nil {
 		stores.Start = newStore
 		stores.Lastest = newStore
 	} else {
 		stores.Lastest.Next = newStore
-		newStore.previous = stores.Lastest
+		newStore.Previous = stores.Lastest
 		stores.Lastest = newStore
 	}
 	stores.Size++
