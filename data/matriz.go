@@ -29,6 +29,7 @@ type storeMatriz struct {
 	Qualifi int    `json:"Calificacion"`
 }
 
+//Lee un archivo local y devuelve un struct data con la informacion
 func dataa() data {
 
 	jsonFile, err := os.Open("./data/categorias.json")
@@ -49,7 +50,7 @@ func dataa() data {
 		fmt.Println("error:", err)
 	}
 	//jsson, _ := json.Marshal(dt)
-	fmt.Println(">>matriz loaded<<")
+	fmt.Println(">>matrix loaded<<")
 
 	dt.byQualification()
 	return dt

@@ -24,7 +24,6 @@ type stores struct {
 	Size    int
 }
 
-//Crear Lista de tiendas
 func NewStoresList() *stores {
 	return &stores{nil, nil, 0}
 }

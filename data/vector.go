@@ -7,97 +7,65 @@ import (
 
 func VectorMain() {
 	fmt.Println("vector")
-	//dataa()
-	v1 := newVectorIndexed()
 
-	v1.setDataVector(dataa())
-	//fmt.Println(v1)
-	//fmt.Println(v1.vector[0].Stores)
-	fmt.Println(v1.vector[3].Stores.Start.Name)
-	fmt.Println(v1.vector[4].Stores.Lastest.Name)
-	fmt.Println(v1.vector[4].Stores.Start.Name)
+	vector := NewVector()
+	matrix := NewMatrix()
 
+	alldepartments := matrix.SetDataMatrix(dataa())
+
+	vector.setVector(matrix, *alldepartments)
+	fmt.Println(vector)
 }
 
 type vector struct {
-	vector []dataVector
+	vector []nodeVector
 }
 
 //ID = ASCII( A-Z + int(calificacion) )
-type dataVector struct {
+type nodeVector struct {
 	ID     string
 	Stores *stores
 }
 
-//Inicializa el vector con todas las posiciones estaticas
-//asciiID -> Ej. A1 -> {65, 49} -> inicio
-func newVectorIndexed() *vector {
-	var vect vector
-	asciiID := []byte{65, 49}
-
-	for i := 0; i < 26; i++ {
-		for j := 0; j < 5; j++ {
-			storeData := dataVector{string(asciiID), NewStoresList()}
-			vect.vector = append(vect.vector, storeData)
-			asciiID[1] = asciiID[1] + 1
-		}
-		asciiID[0] = asciiID[0] + 1
-		asciiID[1] = 49
-	}
-	return &vect
+func NewVector() *vector {
+	return &vector{}
 }
 
-//Actualiza las tiendas en base al id
-func (dtvt *dataVector) updateStore(id string, sts stores) {
-	for i := 0; i < dtvt.Stores.Size; i++ {
-		if dtvt.ID == id {
-			dtvt.Stores = &sts
-			break
-		} else {
-			fmt.Println("El id esta mal")
-		}
-	}
+func NewnodeVector() *nodeVector {
+	return &nodeVector{}
 }
 
-//Insertar informacion en el vector
-func (vt *vector) setDataVector(data data) {
-	for i := 0; i < len(data.Data); i++ {
-		vt.mapDepartments(data.Data[i].Index, data.Data[i].Department)
-	}
+func (node *nodeVector) setnodeVector(id string, str *stores) {
+	node.ID = id
+	node.Stores = str
 }
 
-//obtiene los departamentos departamanetos
-func (vt *vector) mapDepartments(id string, department []departmentMatriz) {
-	for i := 0; i < len(department); i++ {
-		vt.setStores(id, department[i].Name, department[i].Store)
-	}
-}
-
-// //Crea e ingresa las tiendas al vector
-func (vt *vector) setStores(idVector string, dept string, storeinfo []storeMatriz) {
-
-	for i := 0; i < len(storeinfo); i++ {
-
-		for j := 0; j < len(vt.vector); j++ {
-			if strings.Contains(vt.vector[j].ID, idVector) {
-
-				switch storeinfo[i].Qualifi {
-				case 2:
-					j++
-				case 3:
-					j = +2
-				case 4:
-					j = +3
-				case 5:
-					j = +4
-				}
-				//mistake
-				vt.vector[j].Stores.setStore(storeinfo[i].Name, storeinfo[i].Desc, storeinfo[i].Contact, storeinfo[i].Qualifi, dept)
-				break
-			} else {
-				j = +5
+//Se recorre la lista de DEPARTAMENTOS EIXISTENTES con DEPARTAMENTES DEL ARCHIVO
+func (v *vector) setVector(matrix *AuxMatrix, alldepartments allDepartments) {
+	for i := 0; i < len(alldepartments.department); i++ {
+		for j := 0; j < len(matrix.Matrix); j++ {
+			if strings.Contains(strings.ToLower(matrix.Matrix[j].Department), strings.ToLower(alldepartments.department[i])) {
+				v.addToVector(matrix, &j, i)
 			}
-
 		}
 	}
+}
+
+//agrega al vector las 5 tiendas de una categoria y un departamento
+//Los agregados, se eliminan del vector de entrada, para mejorar rendimiento
+func (vector *vector) addToVector(matrixx *AuxMatrix, index *int, i int) {
+	matrix := matrixx.Matrix
+	n0 := nodeVector{matrix[*index].Vector[0].ID, matrix[*index].Vector[0].Stores}
+	n1 := nodeVector{matrix[*index].Vector[1].ID, matrix[*index].Vector[1].Stores}
+	n2 := nodeVector{matrix[*index].Vector[2].ID, matrix[*index].Vector[2].Stores}
+	n3 := nodeVector{matrix[*index].Vector[3].ID, matrix[*index].Vector[3].Stores}
+	n4 := nodeVector{matrix[*index].Vector[4].ID, matrix[*index].Vector[4].Stores}
+
+	if i != 0 && *index != len(matrix) {
+		matrix = append(matrix[:*index-1], matrix[*index:]...)
+	} else {
+		matrix = append(matrix[*index:])
+	}
+
+	vector.vector = append(vector.vector, []nodeVector{n0, n1, n2, n3, n4}...)
 }
