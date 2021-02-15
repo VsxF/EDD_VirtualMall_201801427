@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
-
 	"./data"
+	"./reports"
 )
 
 func main() {
 	fmt.Println("main")
-	//data.Listdd()
-	data.VectorMain()
+	vector := data.VectorMain()
+	//fmt.Println(vector.Vector)
+	reports.GetComplete(vector)
 	//reports.GetComplete()
 }

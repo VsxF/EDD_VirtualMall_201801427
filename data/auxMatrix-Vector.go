@@ -31,7 +31,7 @@ type AuxMatrix struct {
 
 type AuxVector struct {
 	Department string
-	Vector     []nodeVector
+	Vector     []NodeVector
 }
 
 type allDepartments struct {
@@ -46,7 +46,7 @@ func NewAuxVector() *AuxVector {
 	return &AuxVector{"", nil}
 }
 
-func (mt *AuxMatrix) addToMatrix(dept string, node []nodeVector) {
+func (mt *AuxMatrix) addToMatrix(dept string, node []NodeVector) {
 	aux := AuxVector{dept, node}
 	mt.Matrix = append(mt.Matrix, aux)
 }
@@ -138,6 +138,6 @@ func (mt *AuxMatrix) SetStoresAux(idVector string, dept string, storeinfo []stor
 		previousQual = str.Qualifi
 	}
 
-	node := []nodeVector{*node1, *node2, *node3, *node4, *node5}
+	node := []NodeVector{*node1, *node2, *node3, *node4, *node5}
 	mt.addToMatrix(id, node)
 }

@@ -20,7 +20,7 @@ func (file *file) AddText(cont string) {
 }
 
 func CreateFile(file file) {
-	f, err := os.Create(file.Name + ".txt")
+	f, err := os.Create(file.Name + ".dot")
 	if err != nil {
 		fmt.Println(err)
 		return

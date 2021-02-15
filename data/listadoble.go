@@ -8,9 +8,9 @@ func Listdd() {
 	fmt.Println(lista.Start)
 }
 
-type vstore struct {
-	Previous      *vstore
-	Next          *vstore
+type Vstore struct {
+	Previous      *Vstore
+	Next          *Vstore
 	Name          string
 	Description   string
 	Contact       string
@@ -18,19 +18,19 @@ type vstore struct {
 	Department    string
 }
 
-type stores struct {
-	Start   *vstore
-	Lastest *vstore
+type Stores struct {
+	Start   *Vstore
+	Lastest *Vstore
 	Size    int
 }
 
-func NewStoresList() *stores {
-	return &stores{nil, nil, 0}
+func NewStoresList() *Stores {
+	return &Stores{nil, nil, 0}
 }
 
 //Insertar nueva tienda
-func (stores *stores) setStore(name string, description string, contact string, qualification int, dep string) {
-	newStore := &vstore{nil, nil, name, description, contact, qualification, dep}
+func (stores *Stores) setStore(name string, description string, contact string, qualification int, dep string) {
+	newStore := &Vstore{nil, nil, name, description, contact, qualification, dep}
 
 	if stores.Start == nil {
 		stores.Start = newStore
@@ -41,9 +41,4 @@ func (stores *stores) setStore(name string, description string, contact string, 
 		stores.Lastest = newStore
 	}
 	stores.Size++
-}
-
-//Imprime las tiendas
-func (stores stores) printStores() {
-
 }

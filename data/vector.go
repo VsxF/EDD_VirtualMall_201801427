@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func VectorMain() {
+func VectorMain() *Vector{
 	fmt.Println("vector")
 
 	vector := NewVector()
@@ -14,34 +14,35 @@ func VectorMain() {
 	alldepartments := matrix.SetDataMatrix(dataa())
 
 	vector.setVector(matrix, *alldepartments)
-	fmt.Println(vector)
+	//fmt.Println(vector)
+	return vector
 }
 
-type vector struct {
-	vector []nodeVector
+type Vector struct {
+	Vector []NodeVector
 }
 
 //ID = ASCII( A-Z + int(calificacion) )
-type nodeVector struct {
+type NodeVector struct {
 	ID     string
-	Stores *stores
+	Stores *Stores
 }
 
-func NewVector() *vector {
-	return &vector{}
+func NewVector() *Vector {
+	return &Vector{}
 }
 
-func NewnodeVector() *nodeVector {
-	return &nodeVector{}
+func NewnodeVector() *NodeVector {
+	return &NodeVector{}
 }
 
-func (node *nodeVector) setnodeVector(id string, str *stores) {
+func (node *NodeVector) setNodeVector(id string, str *Stores) {
 	node.ID = id
 	node.Stores = str
 }
 
 //Se recorre la lista de DEPARTAMENTOS EIXISTENTES con DEPARTAMENTES DEL ARCHIVO
-func (v *vector) setVector(matrix *AuxMatrix, alldepartments allDepartments) {
+func (v *Vector) setVector(matrix *AuxMatrix, alldepartments allDepartments) {
 	for i := 0; i < len(alldepartments.department); i++ {
 		for j := 0; j < len(matrix.Matrix); j++ {
 			if strings.Contains(strings.ToLower(matrix.Matrix[j].Department), strings.ToLower(alldepartments.department[i])) {
@@ -53,19 +54,26 @@ func (v *vector) setVector(matrix *AuxMatrix, alldepartments allDepartments) {
 
 //agrega al vector las 5 tiendas de una categoria y un departamento
 //Los agregados, se eliminan del vector de entrada, para mejorar rendimiento
-func (vector *vector) addToVector(matrixx *AuxMatrix, index *int, i int) {
+func (vector *Vector) addToVector(matrixx *AuxMatrix, index *int, i int) {
 	matrix := matrixx.Matrix
-	n0 := nodeVector{matrix[*index].Vector[0].ID, matrix[*index].Vector[0].Stores}
-	n1 := nodeVector{matrix[*index].Vector[1].ID, matrix[*index].Vector[1].Stores}
-	n2 := nodeVector{matrix[*index].Vector[2].ID, matrix[*index].Vector[2].Stores}
-	n3 := nodeVector{matrix[*index].Vector[3].ID, matrix[*index].Vector[3].Stores}
-	n4 := nodeVector{matrix[*index].Vector[4].ID, matrix[*index].Vector[4].Stores}
-
-	if i != 0 && *index != len(matrix) {
-		matrix = append(matrix[:*index-1], matrix[*index:]...)
+	n0 := NodeVector{matrix[*index].Vector[0].ID, matrix[*index].Vector[0].Stores}
+	n1 := NodeVector{matrix[*index].Vector[1].ID, matrix[*index].Vector[1].Stores}
+	n2 := NodeVector{matrix[*index].Vector[2].ID, matrix[*index].Vector[2].Stores}
+	n3 := NodeVector{matrix[*index].Vector[3].ID, matrix[*index].Vector[3].Stores}
+	n4 := NodeVector{matrix[*index].Vector[4].ID, matrix[*index].Vector[4].Stores}
+	
+	auxIndex := *index + 1
+	if *index == 0 {
+		matrixx.Matrix = matrixx.Matrix[auxIndex:]
+	} else if *index != len(matrixx.Matrix) {
+		matrixx.Matrix = append(matrixx.Matrix[:auxIndex-1], matrixx.Matrix[auxIndex:]...)
 	} else {
-		matrix = append(matrix[*index:])
-	}
+		matrixx.Matrix = matrixx.Matrix[:auxIndex-1]
+}
 
-	vector.vector = append(vector.vector, []nodeVector{n0, n1, n2, n3, n4}...)
+if auxIndex == len(matrixx.Matrix) {
+	*index = -1
+}
+
+	vector.Vector = append(vector.Vector, []NodeVector{n0, n1, n2, n3, n4}...)
 }

@@ -1,0 +1,61 @@
+digraph G {
+ rankdir=TD
+	node[shape=box]
+	compound=true
+
+	DeportesA1->DeportesA2 [constraint=false]
+	DeportesA2->DeportesA3 [constraint=false]
+	DeportesA3->DeportesA4 [constraint=false]
+
+	subgraph clusterDeportesA4 {
+		"Amador"
+	 } 
+	DeportesA4->"Amador" [lhead=clusterDeportesA4 arrowhead=none]
+
+	DeportesA4->DeportesA5 [constraint=false]
+
+	subgraph clusterDeportesA5 {
+		"Aurora"->"Armados" [arrowhead=rnormal]
+		"Armados"->"Aurora" [arrowhead=rnormal]
+	 } 
+	DeportesA5->"Aurora" [lhead=clusterDeportesA5 arrowhead=none]
+
+	DeportesA5->DeportesB1 [constraint=false]
+	DeportesB1->DeportesB2 [constraint=false]
+	DeportesB2->DeportesB3 [constraint=false]
+	DeportesB3->DeportesB4 [constraint=false]
+	DeportesB4->DeportesB5 [constraint=false]
+	DeportesB5->ComidaA1 [constraint=false]
+	ComidaA1->ComidaA2 [constraint=false]
+	ComidaA2->ComidaA3 [constraint=false]
+	ComidaA3->ComidaA4 [constraint=false]
+	ComidaA4->ComidaA5 [constraint=false]
+
+	subgraph clusterComidaA5 {
+		"A comer todo"
+	 } 
+	ComidaA5->"A comer todo" [lhead=clusterComidaA5 arrowhead=none]
+
+	ComidaA5->ComidaB1 [constraint=false]
+	ComidaB1->ComidaB2 [constraint=false]
+	ComidaB2->ComidaB3 [constraint=false]
+	ComidaB3->ComidaB4 [constraint=false]
+	ComidaB4->ComidaB5 [constraint=false]
+	ComidaB5->celularesA1 [constraint=false]
+	celularesA1->celularesA2 [constraint=false]
+	celularesA2->celularesA3 [constraint=false]
+	celularesA3->celularesA4 [constraint=false]
+	celularesA4->celularesA5 [constraint=false]
+	celularesA5->CelularesB1 [constraint=false]
+	CelularesB1->CelularesB2 [constraint=false]
+	CelularesB2->CelularesB3 [constraint=false]
+	CelularesB3->CelularesB4 [constraint=false]
+	CelularesB4->CelularesB5 [constraint=false]
+
+	subgraph clusterCelularesB5 {
+		"Bayoneta"
+	 } 
+	CelularesB5->"Bayoneta" [lhead=clusterCelularesB5 arrowhead=none]
+
+
+}
