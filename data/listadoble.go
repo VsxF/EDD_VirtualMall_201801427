@@ -24,6 +24,10 @@ type Stores struct {
 	Size    int
 }
 
+func NewVstore() *Vstore {
+	return &Vstore{}
+}
+
 func NewStoresList() *Stores {
 	return &Stores{nil, nil, 0}
 }

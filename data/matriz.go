@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"sort"
-	"strings"
+	// "strings"
 )
 
 type Data struct {
@@ -53,28 +53,11 @@ func Dataa() Data {
 
 //Ordena las tiendas por calificacion
 func (dt *Data) byQualification() {
-	prevIndex := []byte("!")
 	for i := 0; i < len(dt.Data); i++ {
 		for j := 0; j < len(dt.Data[i].Department); j++ {
 			sort.SliceStable(dt.Data[i].Department[j].Store, func(k, z int) bool {
 				return dt.Data[i].Department[j].Store[k].Qualifi < dt.Data[i].Department[j].Store[z].Qualifi
 			})
-		}
-
-		if dt.Data[i].Index != "" {
-			index := []byte(strings.ToLower(dt.Data[i].Index))
-			if prevIndex[0] > index[0] {
-				fmt.Println("MAYOR")
-				fmt.Println(dt.Data[i].Department)
-			}
-
-			prevIndex = index
-		}
-		
-
-		
-		
-
-		
+		}		
 	}
 }

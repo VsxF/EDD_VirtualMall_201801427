@@ -34,15 +34,13 @@ func setStores(w http.ResponseWriter, r *http.Request) {
 
 	Error(err)
 
-	// reports.CreateFile(reports.File{"categorias", string(body[:]), ".json"})
+	reports.CreateFile(reports.File{"categorias", string(body[:]), ".json"})
 
 	MainVector.GetVector(response)
 }
 
 //Imprimir tiendas en consola desde un GET
 func getStores(w http.ResponseWriter, r *http.Request) {
-	
-	//fmt.Println(r.ReadResponse())
 	fmt.Fprintf(w, "El vector se imprimio en consola")
 	fmt.Println(MainVector)
 }
@@ -55,18 +53,14 @@ func getArreglo(w http.ResponseWriter, r *http.Request) {
 }
 
 func searchByName(w http.ResponseWriter, r *http.Request) {
-	//body, _ := ioutil.ReadAll(r.Body)
+	body, _ := ioutil.ReadAll(r.Body)
 	
-	//var response reports.SearchedStore
+	response := data.NewVstore()
 	
-	//err := json.Unmarshal(body, &response)
+	err := json.Unmarshal(body, &response)
+	Error(err)
 
-	//Error(err)
-
-	//reports.GetSearch(response)
-	fmt.Println("ss")
-	fmt.Println(r.URL.Query())
-	//fmt.Fprintf(w, string(r.URL.Query()))
+	reports.GetSearch(response, MainVector)
 }
 
 func searchByPosition(w http.ResponseWriter, r *http.Request) {

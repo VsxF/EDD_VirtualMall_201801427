@@ -7,27 +7,18 @@ import (
 
 func (vector *Vector) GetVector(data Data) {
 	fmt.Println()
-	if vector.Vector == nil {
-		vector.Vector = NewVector()
+	if data.Data != nil {	
+		matrix := NewMatrix()
+		data.byQualification()
+		matrix.SetDataMatrix(data, vector.Alldepartments)
+		//fmt.Println(matrix)
+		vector.setVector(matrix, vector.Alldepartments)
 	}
-
-	matrix := NewMatrix()
-	data.byQualification()
-	vector.Alldepartments := matrix.SetDataMatrix(data)
-
-	vector.setVector(matrix, &alldepartments)
-
 }
-
-// for insetar depts -> 
-// 	if PrevDptIndex[]byte > actual
-// 		metodoRegresion
-		
-// 		{ for depts insertados -> if  > Index < insert, return  }
 
 type Vector struct {
 	Vector []NodeVector
-	Alldepartments *allDepartments
+	Alldepartments *AllDepartments
 }
 
 //ID = ASCII( Dept + A-Z + int(calificacion) )
@@ -37,7 +28,7 @@ type NodeVector struct {
 }
 
 func NewVector() *Vector {
-	return &Vector{}
+	return &Vector{[]NodeVector{}, &AllDepartments{[]string{}}}
 }
 
 func NewnodeVector() *NodeVector {
@@ -50,7 +41,7 @@ func (node *NodeVector) setNodeVector(id string, str *Stores) {
 }
 
 //Se recorre la lista de DEPARTAMENTOS EIXISTENTES con DEPARTAMENTES DEL ARCHIVO
-func (v *Vector) setVector(matrix *AuxMatrix, alldepartments allDepartments) {
+func (v *Vector) setVector(matrix *AuxMatrix, alldepartments *AllDepartments) {
 	for i := 0; i < len(alldepartments.department); i++ {
 		_allDepartment := strings.ToLower(alldepartments.department[i])
 		

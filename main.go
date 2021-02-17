@@ -9,9 +9,11 @@ import (
 
 func main() {
 	fmt.Println()
-	vector := data.GetVector(data.Dataa())
+	vector := data.NewVector()
+	vector.GetVector(data.Dataa())
+	fmt.Println(vector)
 	// reports.GetComplete(vector)
 	host.MainVector = vector
-	// fmt.Println(vector)
-	// host.Request()	
+	
+	host.Request()	
 }

@@ -18,7 +18,7 @@ type AuxVector struct {
 	Vector     []NodeVector
 }
 
-type allDepartments struct {
+type AllDepartments struct {
 	department []string
 }
 
@@ -35,12 +35,9 @@ func (mt *AuxMatrix) addToMatrix(dept string, node []NodeVector) {
 	mt.Matrix = append(mt.Matrix, aux)
 }
 
-func (dpt *allDepartments) AddDepartmentAll(dept string) {
+func (dpt *AllDepartments) AddDepartmentAll(dept string) {
 	if dept != "" {
 		saved := false
-		if dpt == nil {
-			dpt = &allDepartments{[]string{dept}}
-		}
 		for i := 0; i < len(dpt.department); i++ {
 			if strings.ToLower(dept) == strings.ToLower(dpt.department[i]) {
 				saved = true
@@ -49,21 +46,36 @@ func (dpt *allDepartments) AddDepartmentAll(dept string) {
 		}
 		if !saved {
 			dpt.department = append(dpt.department, dept)
-		}		
-	}	
+		}
+	}
 }
 
-//Insertar informacion en el vector 
+//Insertar informacion en el vector
 // > Linealizado, tiendas lista doble
 // >vector de departamentos existentes (sin repetir)
-func (mt *AuxMatrix) SetDataMatrix(data Data, alldpt *allDepartments ) {
+func (mt *AuxMatrix) SetDataMatrix(data Data, alldpt *AllDepartments ) {
 	for i := 0; i < len(data.Data); i++ {
-		mt.SetDepartmentMatrix(data.Data[i].Index, data.Data[i].Department, alldpt)
+		mt.OrderIndex(&data, i) 
+		mt.SetDepartmentMatrix(data.Data[i].Index, data.Data[i].Department, alldpt)	
+	}
+}
+
+//Ordena la matriz segun el indice A-Z
+func (mt *AuxMatrix) OrderIndex(data *Data, index int){
+if index != len(data.Data)-1 {
+		actualIndex := []byte(strings.ToLower(data.Data[index].Index))
+		nextIndex := []byte(strings.ToLower(data.Data[index + 1].Index))
+		if len(nextIndex) != 0 {
+			if actualIndex[0] > nextIndex[0] {
+				first := append(data.Data[:index], data.Data[index + 1], data.Data[index])		
+				data.Data = append(first[:len(first)], data.Data[index+2:]...)
+			}
+		}		
 	}
 }
 
 //Obtiene los departamentos departamanetos
-func (mt *AuxMatrix) SetDepartmentMatrix(id string, department []departmentMatriz, alldpt *allDepartments) {
+func (mt *AuxMatrix) SetDepartmentMatrix(id string, department []departmentMatriz, alldpt *AllDepartments) {
 	for i := 0; i < len(department); i++ {
 		dpt := department[i]
 		alldpt.AddDepartmentAll(dpt.Name)
