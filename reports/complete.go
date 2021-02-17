@@ -2,6 +2,7 @@ package reports
 
 import (
 	"fmt"
+	"os/exec"
 	"../data"
 )
 
@@ -14,7 +15,9 @@ func GetComplete(vector *data.Vector) {
 	content += "\n}"
 
 	//fmt.Println(content)
-	CreateFile(file{"pv", content})
+	CreateFile(File{"pv", content, ".dot"})
+	exec.Command("dot", "-Tpng", "pv.dot", "-o", "pv.png").Run()
+	fmt.Println(vector)
 }
 
 func printVector(vector *data.Vector) string{

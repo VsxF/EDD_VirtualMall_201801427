@@ -11,11 +11,11 @@ func Listdd() {
 type Vstore struct {
 	Previous      *Vstore
 	Next          *Vstore
-	Name          string
-	Description   string
-	Contact       string
-	Qualification int
-	Department    string
+	Name          string `json:"Nombre"`
+	Description   string `json:"Descripcion"`
+	Contact       string `json:"Contacto"`
+	Qualification int `json:"Calificacion"`
+	Department    string `json:"Departamento"`
 }
 
 type Stores struct {

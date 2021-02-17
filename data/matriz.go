@@ -6,9 +6,10 @@ import (
 	"io/ioutil"
 	"os"
 	"sort"
+	"strings"
 )
 
-type data struct {
+type Data struct {
 	Data []departmentsMatriz `json:"Datos"`
 }
 
@@ -30,40 +31,50 @@ type storeMatriz struct {
 }
 
 //Lee un archivo local y devuelve un struct data con la informacion
-func dataa() data {
-
-	jsonFile, err := os.Open("./data/categorias.json")
-
-	if err != nil {
-		fmt.Println(err)
-	}
-
+func Dataa() Data {
+	jsonFile, err := os.Open("./categorias.json")
 	defer jsonFile.Close()
 
-	var dt data
+	var dt Data
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 	err2 := json.Unmarshal([]byte(byteValue), &dt)
 
-	if err2 != nil {
-
-		fmt.Println("error:", err)
+	if err != nil {
+		fmt.Println("error: ", err)
+	} else if err2 != nil {
+		fmt.Println("error: ", err)
+	} else {
+		fmt.Println(">>matrix loaded<<")
 	}
-	//jsson, _ := json.Marshal(dt)
-	fmt.Println(">>matrix loaded<<")
-
-	dt.byQualification()
+	
 	return dt
 }
 
 //Ordena las tiendas por calificacion
-func (dt *data) byQualification() {
+func (dt *Data) byQualification() {
+	prevIndex := []byte("!")
 	for i := 0; i < len(dt.Data); i++ {
 		for j := 0; j < len(dt.Data[i].Department); j++ {
-
 			sort.SliceStable(dt.Data[i].Department[j].Store, func(k, z int) bool {
 				return dt.Data[i].Department[j].Store[k].Qualifi < dt.Data[i].Department[j].Store[z].Qualifi
 			})
 		}
+
+		if dt.Data[i].Index != "" {
+			index := []byte(strings.ToLower(dt.Data[i].Index))
+			if prevIndex[0] > index[0] {
+				fmt.Println("MAYOR")
+				fmt.Println(dt.Data[i].Department)
+			}
+
+			prevIndex = index
+		}
+		
+
+		
+		
+
+		
 	}
 }

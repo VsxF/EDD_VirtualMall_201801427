@@ -5,22 +5,26 @@ import (
 	"os"
 )
 
-type file struct {
+type File struct {
 	Name    string
 	Content string
+	Ext string
 }
 
-func (file *file) NewFile(name string) {
+func NewFile(name string, ext string) *File {
+	var file File
 	file.Name = name
 	file.Content = ""
+	file.Ext = ext
+	return &file
 }
 
-func (file *file) AddText(cont string) {
+func (file *File) AddText(cont string) {
 	file.Content += cont
 }
 
-func CreateFile(file file) {
-	f, err := os.Create(file.Name + ".dot")
+func CreateFile(file File) {
+	f, err := os.Create(file.Name + file.Ext)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -31,7 +35,7 @@ func CreateFile(file file) {
 		f.Close()
 		return
 	}
-	fmt.Println(l, "bytes written successfully")
+	fmt.Println(l, "Archivo creado")
 	err = f.Close()
 	if err != nil {
 		fmt.Println(err)

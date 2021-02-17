@@ -6,24 +6,8 @@ package data
 import (
 	"fmt"
 	"strconv"
+	"strings"
 )
-
-func AuxMain() {
-	fmt.Println("aux")
-	matrix := NewMatrix()
-
-	matrix.SetDataMatrix(dataa())
-
-	fmt.Println(matrix.Matrix)
-	fmt.Println("><")
-	fmt.Println(matrix.Matrix[5].Department)
-	fmt.Println(matrix.Matrix[5].Vector)
-	fmt.Println("><")
-	fmt.Println(matrix.Matrix[5].Vector[4].ID)
-	fmt.Println(matrix.Matrix[5].Vector[4].Stores.Start)
-	fmt.Println(matrix.Matrix[5].Vector[4].Stores.Lastest)
-	fmt.Println("><")
-}
 
 type AuxMatrix struct {
 	Matrix []AuxVector
@@ -52,42 +36,39 @@ func (mt *AuxMatrix) addToMatrix(dept string, node []NodeVector) {
 }
 
 func (dpt *allDepartments) AddDepartmentAll(dept string) {
-	saved := false
-	if dpt == nil {
-		dpt = &allDepartments{[]string{dept}}
-	}
-	for i := 0; i < len(dpt.department); i++ {
-		if dept == dpt.department[i] {
-			saved = true
-			break
+	if dept != "" {
+		saved := false
+		if dpt == nil {
+			dpt = &allDepartments{[]string{dept}}
 		}
-	}
-	if !saved {
-		dpt.department = append(dpt.department, dept)
-	}
+		for i := 0; i < len(dpt.department); i++ {
+			if strings.ToLower(dept) == strings.ToLower(dpt.department[i]) {
+				saved = true
+				break
+			}
+		}
+		if !saved {
+			dpt.department = append(dpt.department, dept)
+		}		
+	}	
 }
 
-//Insertar informacion en el vector
-//Devuelve todos los departamentos existentes en el
-func (mt *AuxMatrix) SetDataMatrix(data data) *allDepartments {
-	var alldpt allDepartments
+//Insertar informacion en el vector 
+// > Linealizado, tiendas lista doble
+// >vector de departamentos existentes (sin repetir)
+func (mt *AuxMatrix) SetDataMatrix(data Data, alldpt *allDepartments ) {
 	for i := 0; i < len(data.Data); i++ {
-		alldpt = *mt.SetDepartmentMatrix(data.Data[i].Index, data.Data[i].Department)
+		mt.SetDepartmentMatrix(data.Data[i].Index, data.Data[i].Department, alldpt)
 	}
-
-	return &alldpt
 }
 
 //Obtiene los departamentos departamanetos
-func (mt *AuxMatrix) SetDepartmentMatrix(id string, department []departmentMatriz) *allDepartments {
-	var alldpt allDepartments
+func (mt *AuxMatrix) SetDepartmentMatrix(id string, department []departmentMatriz, alldpt *allDepartments) {
 	for i := 0; i < len(department); i++ {
 		dpt := department[i]
 		alldpt.AddDepartmentAll(dpt.Name)
-
 		mt.SetStoresAux(id, dpt.Name, dpt.Store)
 	}
-	return &alldpt
 }
 
 //Crea e ingresa las tiendas al vector
