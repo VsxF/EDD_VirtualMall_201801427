@@ -3,16 +3,20 @@ package main
 import (
 	"fmt"
 	"./data"
-	// "./reports"
+	// // "./reports"
 	"./host"
 )
 
 func main() {
 	fmt.Println()
 	vector := data.NewVector()
-	vector.GetVector(data.Dataa())
-	fmt.Println(vector)
+	data, _ := data.Dataa()
+	// fmt.Println(a)
+	
+	vector.GetVector(data)
+	// fmt.Println(vector)
 	// reports.GetComplete(vector)
+	// reports.SaveVector(*vector)
 	host.MainVector = vector
 	
 	host.Request()	

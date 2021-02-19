@@ -1,13 +1,5 @@
 package data
 
-import "fmt"
-
-func Listdd() {
-	lista := NewStoresList()
-	lista.setStore("nombre", "descrip", "contac", 5, "dep")
-	fmt.Println(lista.Start)
-}
-
 type Vstore struct {
 	Previous      *Vstore
 	Next          *Vstore

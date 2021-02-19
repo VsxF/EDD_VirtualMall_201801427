@@ -19,7 +19,7 @@ type AuxVector struct {
 }
 
 type AllDepartments struct {
-	department []string
+	Department []string
 }
 
 func NewMatrix() *AuxMatrix {
@@ -38,14 +38,14 @@ func (mt *AuxMatrix) addToMatrix(dept string, node []NodeVector) {
 func (dpt *AllDepartments) AddDepartmentAll(dept string) {
 	if dept != "" {
 		saved := false
-		for i := 0; i < len(dpt.department); i++ {
-			if strings.ToLower(dept) == strings.ToLower(dpt.department[i]) {
+		for i := 0; i < len(dpt.Department); i++ {
+			if strings.ToLower(dept) == strings.ToLower(dpt.Department[i]) {
 				saved = true
 				break
 			}
 		}
 		if !saved {
-			dpt.department = append(dpt.department, dept)
+			dpt.Department = append(dpt.Department, dept)
 		}
 	}
 }
@@ -75,7 +75,7 @@ if index != len(data.Data)-1 {
 }
 
 //Obtiene los departamentos departamanetos
-func (mt *AuxMatrix) SetDepartmentMatrix(id string, department []departmentMatriz, alldpt *AllDepartments) {
+func (mt *AuxMatrix) SetDepartmentMatrix(id string, department []DepartmentMatriz, alldpt *AllDepartments) {
 	for i := 0; i < len(department); i++ {
 		dpt := department[i]
 		alldpt.AddDepartmentAll(dpt.Name)
@@ -84,7 +84,7 @@ func (mt *AuxMatrix) SetDepartmentMatrix(id string, department []departmentMatri
 }
 
 //Crea e ingresa las tiendas al vector
-func (mt *AuxMatrix) SetStoresAux(idVector string, dept string, storeinfo []storeMatriz) {
+func (mt *AuxMatrix) SetStoresAux(idVector string, dept string, storeinfo []StoreMatriz) {
 	node1 := NewnodeVector()
 	node2 := NewnodeVector()
 	node3 := NewnodeVector()
@@ -134,3 +134,26 @@ func (mt *AuxMatrix) SetStoresAux(idVector string, dept string, storeinfo []stor
 	node := []NodeVector{*node1, *node2, *node3, *node4, *node5}
 	mt.addToMatrix(id, node)
 }
+
+//???????????????????????????????????????
+// Vector -> Matrix ... -> .json
+//???????????????????????????????????????
+
+// func (mt *AuxMatrix) MapDepartments(vector Vector) {
+// 	prevIndex := ""
+// 	for i := 0; i < len(vector.Vector); i++ {
+// 		auxIndex := []byte(vector.Vector[i].ID)
+// 		index := string(auxIndex[len(auxIndex)-2])
+
+// 		if prevIndex == index {
+			
+
+// 		}
+	
+// 		prevIndex = index
+// 	}
+// }
+
+// func (mt *AuxMatrix) setAuxMatrix(dept string, ) {
+
+// }

@@ -8,16 +8,17 @@ import (
 
 func GetComplete(vector *data.Vector) {
 	fmt.Println("Complete report")
+	//t.Println(vector)
 	content := "digraph G {\n rankdir=TD\n\tnode[shape=box]\n\tcompound=true\n\n"
 	
 	content += printVector(vector)
 	
 	content += "\n}"
 
-	//fmt.Println(content)
+	// fmt.Println(content)
 	CreateFile(File{"pv", content, ".dot"})
 	exec.Command("dot", "-Tpng", "pv.dot", "-o", "pv.png").Run()
-	fmt.Println(vector)
+	//fmt.Println(vector)
 }
 
 func printVector(vector *data.Vector) string{
@@ -27,7 +28,7 @@ func printVector(vector *data.Vector) string{
 	for i := 0; i < len(vector.Vector); i++ {
 		vectorr := vector.Vector[i]
 		if prevID != "" {
-			content += "\t" + prevID + "->" + vectorr.ID + " [constraint=false]\n"
+			content += "\t\"" + prevID + "\"->\"" + vectorr.ID + "\" [constraint=false]\n"
 		}
 		prevID = vectorr.ID
 
@@ -39,7 +40,7 @@ func printVector(vector *data.Vector) string{
 }
 
 func printStores(id string, stores *data.Stores) string{ 
-	content := "\n\tsubgraph cluster" + id + " {\n"
+	content := "\n\tsubgraph \"cluster" + id + "\" {\n"
 	content += "\t\t\"" + stores.Start.Name + "\""
 	auxNode := stores.Start.Next
 
@@ -57,7 +58,7 @@ func printStores(id string, stores *data.Stores) string{
 		content += "\n" + auxContent
 	}
 	
-	content += "\n\t } \n\t"
-	content += id + "->\"" + stores.Start.Name + "\" [lhead=cluster" + id + " arrowhead=none]\n\n"
+	content += "\n\t } \n\t\""
+	content += id + "\"->\"" + stores.Start.Name + "\" [lhead=\"cluster" + id + "\" arrowhead=none]\n\n"
 	return content
 }

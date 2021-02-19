@@ -10,28 +10,44 @@ import (
 )
 
 type Data struct {
-	Data []departmentsMatriz `json:"Datos"`
+	Data []DepartmentsMatriz `json:"Datos"`
 }
 
-type departmentsMatriz struct {
+type DepartmentsMatriz struct {
 	Index      string             `json:"Indice"`
-	Department []departmentMatriz `json:"Departamentos"`
+	Department []DepartmentMatriz `json:"Departamentos"`
 }
 
-type departmentMatriz struct {
+type DepartmentMatriz struct {
 	Name  string        `json:"Nombre"`
-	Store []storeMatriz `json:"Tiendas"`
+	Store []StoreMatriz `json:"Tiendas"`
 }
 
-type storeMatriz struct {
+type StoreMatriz struct {
 	Name    string `json:"Nombre"`
 	Desc    string `json:"Descripcion"`
 	Contact string `json:"Contacto"`
 	Qualifi int    `json:"Calificacion"`
 }
 
+func NewData() *Data {
+	return &Data{}
+}
+
+func NewDepartmentsMatriz() *DepartmentsMatriz {
+	return &DepartmentsMatriz{}
+}
+
+func NewDepartmentMatriz() *DepartmentMatriz {
+	return &DepartmentMatriz{}
+}
+
+func NewStoreMatriz() *StoreMatriz {
+	return &StoreMatriz{}
+}
+
 //Lee un archivo local y devuelve un struct data con la informacion
-func Dataa() Data {
+func Dataa() (Data, []byte) {
 	jsonFile, err := os.Open("./categorias.json")
 	defer jsonFile.Close()
 
@@ -48,7 +64,7 @@ func Dataa() Data {
 		fmt.Println(">>matrix loaded<<")
 	}
 	
-	return dt
+	return dt, byteValue
 }
 
 //Ordena las tiendas por calificacion
