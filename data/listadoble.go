@@ -1,5 +1,7 @@
 package data
 
+import "strings"
+
 type Vstore struct {
 	Previous      *Vstore
 	Next          *Vstore
@@ -37,4 +39,54 @@ func (stores *Stores) setStore(name string, description string, contact string, 
 		stores.Lastest = newStore
 	}
 	stores.Size++
+}
+
+func (stores *Stores) AddStores(st *Stores) {
+	if stores.Size > 0 {
+		if st.Size > 0 {
+			st.Start.Previous = stores.Lastest
+			*stores.Lastest.Next = *st.Start
+			
+			*stores.Lastest = *st.Lastest
+		}
+	} else {
+		*stores = *st
+	}
+}
+
+//Eliminar tienda de la lista doble de una posicion
+func (vt *Vector) DeleteStore(delete Vstore, index int) bool {
+	if vt.Vector[index].Stores.Size > 0 {
+		store := vt.Vector[index].Stores.Start
+		
+		for store != nil {
+			name := strings.ToLower(store.Name)
+			delname := strings.ToLower(delete.Name)
+			
+			if name == delname && delete.Qualification == store.Qualification {
+				
+				if store.Next == nil && store.Previous == nil {
+					vt.Vector[index].Stores = &Stores{nil, nil, 0}
+
+				} else if store.Next != nil && store.Previous != nil {
+					store.Previous.Next = store.Next
+					store.Next.Previous = store.Previous
+					vt.Vector[index].Stores.Size--
+
+				} else  if store.Next != nil {
+					store.Next.Previous = nil
+					vt.Vector[index].Stores.Start = store.Next
+					vt.Vector[index].Stores.Size--
+
+				} else if store.Previous != nil {
+					store.Previous.Next = nil
+					vt.Vector[index].Stores.Lastest = store.Previous
+					vt.Vector[index].Stores.Size--
+				} 
+				return true
+			} 
+			store = store.Next
+		}
+	}
+	return false
 }

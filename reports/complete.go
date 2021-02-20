@@ -8,14 +8,12 @@ import (
 
 func GetComplete(vector *data.Vector) {
 	fmt.Println("Complete report")
-	//t.Println(vector)
 	content := "digraph G {\n rankdir=TD\n\tnode[shape=box]\n\tcompound=true\n\n"
 	
 	content += printVector(vector)
 	
 	content += "\n}"
 
-	// fmt.Println(content)
 	CreateFile(File{"pv", content, ".dot"})
 	exec.Command("dot", "-Tpng", "pv.dot", "-o", "pv.png").Run()
 	//fmt.Println(vector)
@@ -47,7 +45,7 @@ func printStores(id string, stores *data.Stores) string{
 	auxContent := "\t\t\"" + stores.Lastest.Name + "\""
 	auxNodeLastes := stores.Lastest.Previous
 
-	for auxNode!= nil {
+	for auxNode!= nil && auxNodeLastes != nil {
 		content += "->\"" + auxNode.Name + "\" [arrowhead=rnormal]"
 		auxContent += "->\"" + auxNodeLastes.Name + "\" [arrowhead=rnormal]"
 		auxNode = auxNode.Next

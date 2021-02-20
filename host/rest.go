@@ -28,24 +28,30 @@ func Request() {
 
 //Ingrsa las tiendas POST
 func setStores(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Set")
 	body, _ := ioutil.ReadAll(r.Body)
 	var response data.Data
 	err := json.Unmarshal(body, &response)
-
 	Error(err)
-
-	//reports.CreateFile(reports.File{"categorias", string(body[:]), ".json"})
-
-	MainVector.GetVector(response)
+	if err == nil {
+		if len(MainVector.Vector) == 0 {
+			MainVector.GetVector(response)
+		} else {
+			auxVector := data.NewVector()
+			auxVector.GetVector(response)
 	
-	reports.SaveVector(*MainVector)
+			//reports.SaveVector(*auxVector)
+	
+			MainVector = data.JoinVectors(*MainVector, *auxVector)
+		}
+		
+		reports.SaveVector(*MainVector)
+		fmt.Fprintf(w, "Seted")
+		fmt.Println("Seted")
+	}
 }
 
-//Obtener imagen del vector GET
 func getArreglo(w http.ResponseWriter, r *http.Request) {
 	reports.GetComplete(MainVector)
-	//fmt.Println(MainVector)
 	fmt.Println("Archivo creado")
 	fmt.Fprintf(w, "Archivo creado")
 }
@@ -56,11 +62,12 @@ func searchByName(w http.ResponseWriter, r *http.Request) {
 	response := data.NewVstore()
 	err := json.Unmarshal(body, &response)
 	Error(err)
+	if err == nil {
+		result := reports.GetSearchByStore(response, MainVector)
 
-	result := reports.GetSearchByStore(response, MainVector)
-
-	fmt.Fprintf(w, result)
-	fmt.Println(result)
+		fmt.Fprintf(w, result)
+		fmt.Println(result)
+	}
 }
 
 func searchByPosition(w http.ResponseWriter, r *http.Request) {
@@ -68,11 +75,12 @@ func searchByPosition(w http.ResponseWriter, r *http.Request) {
 	idURL := string(url[4:])
 	id, err := strconv.Atoi(idURL)
 	Error(err)
-	
-	result := reports.GetSearchByPosition(id, *MainVector)
+	if err == nil {
+		result := reports.GetSearchByPosition(id, *MainVector)
 
-	fmt.Println(result)
-	fmt.Fprintf(w, result)
+		fmt.Println(result)
+		fmt.Fprintf(w, result)
+	}
 }
 
 func deleteStore(w http.ResponseWriter, r *http.Request) {
@@ -83,10 +91,12 @@ func deleteStore(w http.ResponseWriter, r *http.Request) {
 	err := json.Unmarshal([]byte(auxBody), &response)
 	Error(err)
 
-	result := reports.DeleteStore(response, MainVector)
-
-	fmt.Fprintf(w, result)
-	fmt.Println(result)
+	if err == nil {
+		result := reports.DeleteStore(response, MainVector)
+		reports.SaveVector(*MainVector)
+		fmt.Fprintf(w, result)
+		fmt.Println(result)
+	}	
 }
 
 func Error(err error) {

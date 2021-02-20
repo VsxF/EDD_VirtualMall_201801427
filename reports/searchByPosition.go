@@ -12,7 +12,6 @@ func GetSearchByPosition(position int, vector data.Vector) string {
 		fmt.Println(vector.Vector[position].Stores)
 		fmt.Println(vector.Vector[position].Stores.Size)
 		if vector.Vector[position].Stores.Size > 0 {
-			fmt.Println("LOL")
 			return getStoresDList(*vector.Vector[position].Stores.Start)
 		}
 		return "No hay ninguna tienda en esa posicion"

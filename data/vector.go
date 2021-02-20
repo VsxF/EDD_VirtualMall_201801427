@@ -11,7 +11,6 @@ func (vector *Vector) GetVector(data Data) {
 		matrix := NewMatrix()
 		data.byQualification()
 		matrix.SetDataMatrix(data, vector.Alldepartments)
-		//fmt.Println(matrix)
 		vector.setVector(matrix, vector.Alldepartments)
 	}
 }
@@ -78,39 +77,93 @@ func (vector *Vector) addToVector(matrixx *AuxMatrix, index *int) {
 	vector.Vector = append(vector.Vector, []NodeVector{n0, n1, n2, n3, n4}...)
 }
 
-//Eliminar tienda de la lista doble de una posicion
-func (vt *Vector) DeleteStore(delete Vstore, index int) bool {
-	if vt.Vector[index].Stores.Size > 0 {
-		store := vt.Vector[index].Stores.Start
-		
-		for store != nil {
-			name := strings.ToLower(store.Name)
-			delname := strings.ToLower(delete.Name)
-			
-			if name == delname && delete.Qualification == store.Qualification {
-				
-				if store.Next == nil && store.Previous == nil {
-					vt.Vector[index].Stores = &Stores{nil, nil, 0}
 
-				} else if store.Next != nil && store.Previous != nil {
-					store.Previous.Next = store.Next
-					store.Next.Previous = store.Previous
-					vt.Vector[index].Stores.Size--
+//Une y Ordena 2 vectores
+// func JoinVectors(vector, second *Vector) *Vector {
+// 	response := NewVector()
+// 	j := 0
+// 	i := 0
+// 	response.mapVectors(vector, second, &i, &j)
+// 	fmt.Println(response)
+// 	return response
+// }
 
-				} else  if store.Next != nil {
-					store.Next.Previous = nil
-					vt.Vector[index].Stores.Start = store.Next
-					vt.Vector[index].Stores.Size--
+// func (response *Vector) mapVectors(vector, second *Vector, i, j *int) {
+// 	_, index := getIDnIndex(*vector)
+// 	_, index2 := getIDnIndex(*second)
 
-				} else if store.Previous != nil {
-					store.Previous.Next = nil
-					vt.Vector[index].Stores.Lastest = store.Previous
-					vt.Vector[index].Stores.Size--
-				} 
-				return true
-			} 
-			store = store.Next
-		}
-	}
-	return false
-}
+// 	if index < 97 && len(second.Vector) != 0 {
+// 		response.addItem(second)
+// 		//response.mapVectors(vector, second, i, j)
+// 	} else if index2 < 97 && len(vector.Vector) != 0 {
+// 		response.addItem(vector)
+// 	} else if index == index2 {
+// 		a := getDepsIndex(*vector, index2)
+// 		response.mergeIndex(vector, second, a)
+// 	} else if index < index2 {
+// 		response.addItem(vector)
+// 	} else if index2 < index {
+// 		response.addItem(second)
+// 	}
+
+// 	if len(vector.Vector) != 0 || len(second.Vector) != 0 {
+// 		response.mapVectors(vector, second, i, j)
+// 	}
+// }
+
+// func (vector *Vector) addItem(slices *Vector) {
+// 	vector.Vector = append(vector.Vector, slices.Vector[0], slices.Vector[1], slices.Vector[2], slices.Vector[3], slices.Vector[4])
+// 	slices.Vector = slices.Vector[5:]
+// }
+
+// func (response *Vector) mergeIndex(first, second *Vector, deptsFirst []string) {
+// 	_, index := getIDnIndex(*first)
+// 	id2, index2 := getIDnIndex(*second)
+// 	added := false
+
+// 	for i := 0; i < len(deptsFirst); i++ {
+// 		if strings.Contains(id2, strings.ToLower(deptsFirst[i])) {
+// 			//merge stores
+// 			deptsFirst[i] = ""
+// 			added = true
+// 			break
+// 		}
+// 	}
+
+// 	if !added {
+// 		first.appendDeptIndex(second)
+// 	}
+
+// 	if index == index2 {
+// 		response.mergeIndex(first, second, deptsFirst)
+// 	}
+// }
+
+// func (vector *Vector) appendDeptIndex(slices *Vector) {
+// 	a := []NodeVector{ slices.Vector[0], slices.Vector[1], slices.Vector[2], slices.Vector[3], slices.Vector[4] }
+// 	vector.Vector = append(a, vector.Vector[0:]...)
+// 	slices.Vector = slices.Vector[5:]
+// }
+
+// func getDepsIndex(vector Vector, index byte) []string {
+// 	var resp []string
+// 	for i := 0; i < len(vector.Vector); i++ {
+// 		id := strings.ToLower(vector.Vector[i].ID)
+// 		if strings.Contains(id, string(index)) {
+// 			resp = append(resp, id)
+// 		} else {
+// 			break
+// 		}
+// 	}
+// 	return resp
+// }
+
+// func getIDnIndex(vector Vector) (string, byte) {
+// 	id := ""
+// 	index := []byte("^")[0]
+// 	if len(vector.Vector) > 0 {
+// 		id = strings.ToLower(vector.Vector[0].ID)
+// 		index = []byte(id)[len(id) - 2]
+// 	}
+// 	return id, index
+// }
