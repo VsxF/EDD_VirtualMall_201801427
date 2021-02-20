@@ -1,9 +1,6 @@
 package data
 
-import (
-	"strings"
-	"fmt"
-)
+import "strings"
 
 //SaveVector -- reports
 type MatrixLista struct {
@@ -12,9 +9,8 @@ type MatrixLista struct {
 
 //Crea una nueva matriz, con las posiciones estaticas
 func NewMatrixLista(vector Vector) *MatrixLista {
-	fmt.Println()
 	j := len(vector.Alldepartments.Department)
-	i := len(vector.Vector)/ (j*5)
+	i := len(vector.Vector)/ (5)
 	mat := make([][]Stores, j)
 	for k := 0; k < j; k++ {
 		mat[k] = make([]Stores, i)		
@@ -29,13 +25,12 @@ func (mt *MatrixLista) MapVector(vector Vector) []string {
 	indexCount := -1
 	deptCount := -1	
 	var matrizID []string	
-
 	for i := 0; i < len(vector.Vector); i++ {
 			auxIndex := []byte(vector.Vector[i].ID)
 			index := strings.ToLower(string(auxIndex[len(auxIndex)-2]))
 			dept := strings.ToLower(string(auxIndex[:len(auxIndex)-2]))
 
-			if prevDept != dept {
+			if prevDept != dept && len(vector.Vector) > 0 {
 				i--
 					deptCount++
 				indexCount = 0
@@ -44,7 +39,9 @@ func (mt *MatrixLista) MapVector(vector Vector) []string {
 				matrizID = append(matrizID, vector.Vector[i].ID)
 			} else {
 				i--
-					indexCount++				
+				if len(mt.Index_qual[deptCount])-1 != indexCount {
+					indexCount++	
+				}			
 			}
 			prevIndex = index
 			prevDept = dept

@@ -1,9 +1,6 @@
 package data
 
-import (
-	"strings"
-	"fmt"
-)
+import "strings"
 
 func JoinVectors(first, second Vector) *Vector {
 	matrix1 := NewMatrixLista(first)
@@ -17,6 +14,7 @@ func JoinVectors(first, second Vector) *Vector {
 	Matrix2Json(data1, *matrix1, ids1)
 	Matrix2Json(data2, *matrix2, ids2)
 	fulldata := JoinMatrixs(data1, data2)
+
 	b := NewVector()
 	b.GetVector(*fulldata)
 	return b
@@ -76,8 +74,6 @@ func getIndex(vt *Data, k int) byte {
 func mapSameDepartments(dpt1, dpt2 DepartmentsMatriz, k, h *int, departments *DepartmentsMatriz)  {
 	name1 := strings.ToLower(dpt1.Department[*k].Name)
 	name2 := strings.ToLower(dpt2.Department[*h].Name)
-	fmt.Println(*k)
-	fmt.Println(*h)
 	if name1 != name2 { 
 		if *k == len(dpt1.Department)-1 {
 			departments.Department = append(departments.Department, dpt1.Department[*k])
@@ -141,9 +137,7 @@ func mapSameDepartment(store1, store2 DepartmentMatriz, x, y *int, storeMatriz *
 		}	
 		if *x != 999 {
 			storeMatriz.Store = append(storeMatriz.Store, store1.Store[*x])
-			
 			storeMatriz.Store = append(storeMatriz.Store, store2.Store[*y])
-			fmt.Println(name2)
 			*x++
 			*y++
 		}
