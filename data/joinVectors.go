@@ -1,6 +1,9 @@
 package data
 
-import "strings"
+import (
+	"strings"
+	"fmt"
+)
 
 func JoinVectors(first, second Vector) *Vector {
 	matrix1 := NewMatrixLista(first)
@@ -142,18 +145,50 @@ func mapSameDepartment(store1, store2 DepartmentMatriz, x, y *int, storeMatriz *
 			*y++
 		}
 	} else {
-		
-		// x := 0
-		// y := 0
-		// store := NewStoreMatriz()
-		// mapSameDepartment(store1.Store[*y], store2.Store[*x], &x, &y, store)
-		// store.Name = strings.Title(name1)
-		// storeMatriz.Store = append(storeMatriz.Store, *store)	
-		// *y++
-		// *x++	
+		storeMatriz.Store = append(storeMatriz.Store, store2.Store[*y:]...)
+		*x++
+			*y++
 	}
 
 	if *x < len(store1.Store) || *y < len(store2.Store) {
 		mapSameDepartment(store1, store2, x, y, storeMatriz)
 	}
+}
+
+func mapSameStores(store1, store2 StoreMatriz, i, j *int, respones *StoreMatriz) {
+	name1 := strings.ToLower(store1.Name)
+	name2 := strings.ToLower(store2.Name)
+	fmt.Println(name1)
+	fmt.Println(name2)
+
+	// if name1 != name2 { 
+	// 	if *x == len(store1.Store)-1 {
+	// 		storeMatriz.Store = append(storeMatriz.Store, store1.Store[*x])
+	// 		*x=999
+	// 		if (*y < 999) {
+	// 			storeMatriz.Store = append(storeMatriz.Store, store2.Store[*y:]...)
+	// 			*y = 999
+	// 		}
+	// 	}
+	// 	if *y == len(store2.Store)-1 {
+	// 		storeMatriz.Store = append(storeMatriz.Store, store2.Store[*y])
+	// 		*y=999
+	// 		if (*x < 999) {
+	// 			storeMatriz.Store = append(storeMatriz.Store, store1.Store[*x+1:]...)
+	// 			*x = 999 
+	// 		}
+	// 	}	
+	// 	if *x != 999 {
+	// 		storeMatriz.Store = append(storeMatriz.Store, store1.Store[*x])
+	// 		storeMatriz.Store = append(storeMatriz.Store, store2.Store[*y])
+	// 		*x++
+	// 		*y++
+	// 	}
+	// } else {
+	// 	//	
+	// }
+
+	// if *x < len(store1.Store) || *y < len(store2.Store) {
+	// 	mapSameStores(store1, store2, i, j, response)
+	// }
 }

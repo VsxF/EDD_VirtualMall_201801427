@@ -1,16 +1,13 @@
 package reports
 
 import (
-	"fmt"
+
 	"strconv"
 	"../data"
 )
 
 func GetSearchByPosition(position int, vector data.Vector) string {
 	if position < len(vector.Vector) {
-		fmt.Println(vector.Vector[position])
-		fmt.Println(vector.Vector[position].Stores)
-		fmt.Println(vector.Vector[position].Stores.Size)
 		if vector.Vector[position].Stores.Size > 0 {
 			return getStoresDList(*vector.Vector[position].Stores.Start)
 		}

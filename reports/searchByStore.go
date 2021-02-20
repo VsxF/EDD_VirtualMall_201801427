@@ -1,7 +1,6 @@
 package reports
 
 import (
-	"fmt"
 	"strings"
 	"strconv"
 	"../data"
@@ -23,7 +22,6 @@ func GetSearchByStore(reqstore *data.Vstore, vector *data.Vector) string {
 }
 
 func getSearch(reqstore *data.Vstore, vector *data.Vector) data.Vstore {
-	fmt.Println()
 	auxIndex := []byte(reqstore.Name)
 	index := string(auxIndex[0]) + strconv.Itoa(reqstore.Qualification)
 	vect := vector.Vector
