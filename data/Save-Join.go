@@ -37,14 +37,14 @@ func (mt *MatrixLista) MapVector(vector Vector) []string {
 
 			if prevDept != dept {
 				i--
-				deptCount++
+					deptCount++
 				indexCount = 0
 			} else if prevIndex == index {
 				mt.addToMatrixLista(indexCount, deptCount, *vector.Vector[i].Stores)
 				matrizID = append(matrizID, vector.Vector[i].ID)
 			} else {
 				i--
-				indexCount++
+					indexCount++				
 			}
 			prevIndex = index
 			prevDept = dept
@@ -54,17 +54,13 @@ func (mt *MatrixLista) MapVector(vector Vector) []string {
 
 //Agrega la informacion a la matrixLista
 func (mt *MatrixLista) addToMatrixLista(index, dept int, stores Stores) {
-	if stores.Size > 0 {
-		a := index
-		// if index == len(mt.Index_qual[dept]) {
-		//  	a = index-1
-		// }
-		if mt.Index_qual[dept][a].Size == 0 {
-			mt.Index_qual[dept][a] = stores
+	if stores.Size > 0   {
+		if mt.Index_qual[dept][index].Size == 0 {
+			mt.Index_qual[dept][index] = stores
 		} else {
 
-			mt.Index_qual[dept][a].Lastest.Next = stores.Start
-			mt.Index_qual[dept][a].Lastest = stores.Lastest
+			mt.Index_qual[dept][index].Lastest.Next = stores.Start
+			mt.Index_qual[dept][index].Lastest = stores.Lastest
 		}
 	}
 }
@@ -80,7 +76,6 @@ func Matrix2Json(dataa *Data, matrix MatrixLista, id []string) {
 	var deslinealizado [1000]Stores
 	prevDpt := ""
 	dpt :=""
-	
 	for  i, stores := range matrix.Index_qual {
 		for j := 0; j < len(stores); j++ {
 			if stores[j].Size > 0 {
@@ -99,7 +94,6 @@ func Matrix2Json(dataa *Data, matrix MatrixLista, id []string) {
 
 func deslinealizado2Data(dataa *Data, deslinealizado [1000]Stores) {
 	var allStores []auxStruct
-
 	for i := 0; i < len(deslinealizado); i++ {
 		if deslinealizado[i].Size > 0 {
 			aux := auxStruct{ deslinealizado[i].Start.Department, deslinealizado[i] }
@@ -113,20 +107,20 @@ func setDepts2Index(dataa *Data, allStores []auxStruct) {
 	dptsMatriz := NewDepartmentsMatriz()
 	dptMatriz := NewDepartmentMatriz()
 	prevIndex := []byte("^")[0]
-
 	for i := 0; i < len(allStores); i++ {
 		index := []byte(strings.ToLower(allStores[i].Stores.Start.Name))[0]
-
 		if prevIndex != index || i == len(allStores)-1{
 
 			if i == len(allStores)-1 {
+				
 				dptMatriz.Name = allStores[i].Departamento
 				dptMatriz.Store = getStoresM2J(*allStores[i].Stores.Start)
-		
-				dptsMatriz.Index = strings.Title(string(index))
+				
+				
+				dptsMatriz.Index = strings.Title(string(prevIndex))
 				dptsMatriz.Department = append(dptsMatriz.Department, *dptMatriz)
+				
 			} 
-
 				dataa.Data = append(dataa.Data, *dptsMatriz)
 				dptsMatriz = NewDepartmentsMatriz()		
 		}
@@ -138,7 +132,11 @@ func setDepts2Index(dataa *Data, allStores []auxStruct) {
 
 		prevIndex = index
 	}
-	dataa.Data = dataa.Data[1:]
+	
+	if len(dataa.Data) > 0 {
+		dataa.Data = dataa.Data[1:]
+	}
+	
 }
 
 func getStoresM2J(store Vstore) []StoreMatriz{

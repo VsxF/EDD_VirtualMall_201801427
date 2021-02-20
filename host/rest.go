@@ -44,7 +44,7 @@ func setStores(w http.ResponseWriter, r *http.Request) {
 			MainVector = data.JoinVectors(*MainVector, *auxVector)
 		}
 		
-		reports.SaveVector(*MainVector)
+		//reports.SaveVector(*MainVector)
 		fmt.Fprintf(w, "Seted")
 		fmt.Println("Seted")
 	}

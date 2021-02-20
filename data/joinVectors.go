@@ -3,7 +3,6 @@ package data
 import (
 	"strings"
 	"fmt"
-	//"encoding/json"
 )
 
 func JoinVectors(first, second Vector) *Vector {
@@ -18,14 +17,9 @@ func JoinVectors(first, second Vector) *Vector {
 	Matrix2Json(data1, *matrix1, ids1)
 	Matrix2Json(data2, *matrix2, ids2)
 	fulldata := JoinMatrixs(data1, data2)
-	//a, _ := json.Marshal(fulldata)
-	//fmt.Println(string(a))
-	//fmt.Println(data1)
-	// fmt.Println(">>")
-	//fmt.Println(data2)
-	a := NewVector()
-	a.GetVector(*fulldata)
-	return a
+	b := NewVector()
+	b.GetVector(*fulldata)
+	return b
 }
 
 //

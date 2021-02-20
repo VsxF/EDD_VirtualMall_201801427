@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"./data"
+	"./reports"
 	"./host"
 )
 
@@ -12,6 +13,7 @@ func main() {
 	data, _ := data.Dataa()
 	
 	vector.GetVector(data)
+	reports.SaveVector(*vector)
 	host.MainVector = vector
 	
 	host.Request()	

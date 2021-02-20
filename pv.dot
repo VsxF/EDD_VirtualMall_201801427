@@ -1,0 +1,241 @@
+digraph G {
+ rankdir=TD
+	node[shape=box]
+	compound=true
+
+	"DeportesA1"->"DeportesA2" [constraint=false]
+	"DeportesA2"->"DeportesA3" [constraint=false]
+	"DeportesA3"->"DeportesA4" [constraint=false]
+
+	subgraph "clusterDeportesA4" {
+		"Amador"
+	 } 
+	"DeportesA4"->"Amador" [lhead="clusterDeportesA4" arrowhead=none]
+
+	"DeportesA4"->"DeportesA5" [constraint=false]
+
+	subgraph "clusterDeportesA5" {
+		"Aurora"->"Armados" [arrowhead=rnormal]
+		"Armados"->"Aurora" [arrowhead=rnormal]
+	 } 
+	"DeportesA5"->"Aurora" [lhead="clusterDeportesA5" arrowhead=none]
+
+	"DeportesA5"->"Electrónicos para autosA1" [constraint=false]
+	"Electrónicos para autosA1"->"Electrónicos para autosA2" [constraint=false]
+
+	subgraph "clusterElectrónicos para autosA2" {
+		"Alvarado y Piña"
+	 } 
+	"Electrónicos para autosA2"->"Alvarado y Piña" [lhead="clusterElectrónicos para autosA2" arrowhead=none]
+
+	"Electrónicos para autosA2"->"Electrónicos para autosA3" [constraint=false]
+	"Electrónicos para autosA3"->"Electrónicos para autosA4" [constraint=false]
+	"Electrónicos para autosA4"->"Electrónicos para autosA5" [constraint=false]
+	"Electrónicos para autosA5"->"Electrónicos para autosB1" [constraint=false]
+	"Electrónicos para autosB1"->"Electrónicos para autosB2" [constraint=false]
+	"Electrónicos para autosB2"->"Electrónicos para autosB3" [constraint=false]
+
+	subgraph "clusterElectrónicos para autosB3" {
+		"Balderas y Agosto"
+	 } 
+	"Electrónicos para autosB3"->"Balderas y Agosto" [lhead="clusterElectrónicos para autosB3" arrowhead=none]
+
+	"Electrónicos para autosB3"->"Electrónicos para autosB4" [constraint=false]
+	"Electrónicos para autosB4"->"Electrónicos para autosB5" [constraint=false]
+
+	subgraph "clusterElectrónicos para autosB5" {
+		"Badillo Ramírez e Hijos"->"Bueno Santacruz e Hijos" [arrowhead=rnormal]
+		"Bueno Santacruz e Hijos"->"Badillo Ramírez e Hijos" [arrowhead=rnormal]
+	 } 
+	"Electrónicos para autosB5"->"Badillo Ramírez e Hijos" [lhead="clusterElectrónicos para autosB5" arrowhead=none]
+
+	"Electrónicos para autosB5"->"Electrónicos para autosC1" [constraint=false]
+	"Electrónicos para autosC1"->"Electrónicos para autosC2" [constraint=false]
+	"Electrónicos para autosC2"->"Electrónicos para autosC3" [constraint=false]
+
+	subgraph "clusterElectrónicos para autosC3" {
+		"Coronado e Hijos"
+	 } 
+	"Electrónicos para autosC3"->"Coronado e Hijos" [lhead="clusterElectrónicos para autosC3" arrowhead=none]
+
+	"Electrónicos para autosC3"->"Electrónicos para autosC4" [constraint=false]
+	"Electrónicos para autosC4"->"Electrónicos para autosC5" [constraint=false]
+	"Electrónicos para autosC5"->"ComidaA1" [constraint=false]
+	"ComidaA1"->"ComidaA2" [constraint=false]
+	"ComidaA2"->"ComidaA3" [constraint=false]
+	"ComidaA3"->"ComidaA4" [constraint=false]
+	"ComidaA4"->"ComidaA5" [constraint=false]
+
+	subgraph "clusterComidaA5" {
+		"A comer todo"
+	 } 
+	"ComidaA5"->"A comer todo" [lhead="clusterComidaA5" arrowhead=none]
+
+	"ComidaA5"->"ComidaB1" [constraint=false]
+	"ComidaB1"->"ComidaB2" [constraint=false]
+	"ComidaB2"->"ComidaB3" [constraint=false]
+	"ComidaB3"->"ComidaB4" [constraint=false]
+	"ComidaB4"->"ComidaB5" [constraint=false]
+
+	subgraph "clusterComidaB5" {
+		"B comer todo"
+	 } 
+	"ComidaB5"->"B comer todo" [lhead="clusterComidaB5" arrowhead=none]
+
+	"ComidaB5"->"Juegos para AndroidA1" [constraint=false]
+	"Juegos para AndroidA1"->"Juegos para AndroidA2" [constraint=false]
+	"Juegos para AndroidA2"->"Juegos para AndroidA3" [constraint=false]
+
+	subgraph "clusterJuegos para AndroidA3" {
+		"Adorno y Camacho"
+	 } 
+	"Juegos para AndroidA3"->"Adorno y Camacho" [lhead="clusterJuegos para AndroidA3" arrowhead=none]
+
+	"Juegos para AndroidA3"->"Juegos para AndroidA4" [constraint=false]
+	"Juegos para AndroidA4"->"Juegos para AndroidA5" [constraint=false]
+	"Juegos para AndroidA5"->"Juegos para AndroidB1" [constraint=false]
+	"Juegos para AndroidB1"->"Juegos para AndroidB2" [constraint=false]
+
+	subgraph "clusterJuegos para AndroidB2" {
+		"Bermúdez y Ceballos"->"Bermúdez Arreola S.A." [arrowhead=rnormal]
+		"Bermúdez Arreola S.A."->"Bermúdez y Ceballos" [arrowhead=rnormal]
+	 } 
+	"Juegos para AndroidB2"->"Bermúdez y Ceballos" [lhead="clusterJuegos para AndroidB2" arrowhead=none]
+
+	"Juegos para AndroidB2"->"Juegos para AndroidB3" [constraint=false]
+	"Juegos para AndroidB3"->"Juegos para AndroidB4" [constraint=false]
+	"Juegos para AndroidB4"->"Juegos para AndroidB5" [constraint=false]
+	"Juegos para AndroidB5"->"Juegos para AndroidC1" [constraint=false]
+	"Juegos para AndroidC1"->"Juegos para AndroidC2" [constraint=false]
+
+	subgraph "clusterJuegos para AndroidC2" {
+		"Cortés e Hijos"
+	 } 
+	"Juegos para AndroidC2"->"Cortés e Hijos" [lhead="clusterJuegos para AndroidC2" arrowhead=none]
+
+	"Juegos para AndroidC2"->"Juegos para AndroidC3" [constraint=false]
+
+	subgraph "clusterJuegos para AndroidC3" {
+		"Cedillo Toro Hermanos"
+	 } 
+	"Juegos para AndroidC3"->"Cedillo Toro Hermanos" [lhead="clusterJuegos para AndroidC3" arrowhead=none]
+
+	"Juegos para AndroidC3"->"Juegos para AndroidC4" [constraint=false]
+	"Juegos para AndroidC4"->"Juegos para AndroidC5" [constraint=false]
+
+	subgraph "clusterJuegos para AndroidC5" {
+		"Cuellar y Palomo"
+	 } 
+	"Juegos para AndroidC5"->"Cuellar y Palomo" [lhead="clusterJuegos para AndroidC5" arrowhead=none]
+
+	"Juegos para AndroidC5"->"PodcastA1" [constraint=false]
+	"PodcastA1"->"PodcastA2" [constraint=false]
+	"PodcastA2"->"PodcastA3" [constraint=false]
+	"PodcastA3"->"PodcastA4" [constraint=false]
+	"PodcastA4"->"PodcastA5" [constraint=false]
+
+	subgraph "clusterPodcastA5" {
+		"Alcala Mora Hermanos"
+	 } 
+	"PodcastA5"->"Alcala Mora Hermanos" [lhead="clusterPodcastA5" arrowhead=none]
+
+	"PodcastA5"->"PodcastB1" [constraint=false]
+	"PodcastB1"->"PodcastB2" [constraint=false]
+
+	subgraph "clusterPodcastB2" {
+		"Benavídez y Pantoja"
+	 } 
+	"PodcastB2"->"Benavídez y Pantoja" [lhead="clusterPodcastB2" arrowhead=none]
+
+	"PodcastB2"->"PodcastB3" [constraint=false]
+
+	subgraph "clusterPodcastB3" {
+		"Bermúdez S.A."
+	 } 
+	"PodcastB3"->"Bermúdez S.A." [lhead="clusterPodcastB3" arrowhead=none]
+
+	"PodcastB3"->"PodcastB4" [constraint=false]
+	"PodcastB4"->"PodcastB5" [constraint=false]
+	"PodcastB5"->"PodcastC1" [constraint=false]
+
+	subgraph "clusterPodcastC1" {
+		"Carreón Hermanos"
+	 } 
+	"PodcastC1"->"Carreón Hermanos" [lhead="clusterPodcastC1" arrowhead=none]
+
+	"PodcastC1"->"PodcastC2" [constraint=false]
+
+	subgraph "clusterPodcastC2" {
+		"Calderón e Hijos"
+	 } 
+	"PodcastC2"->"Calderón e Hijos" [lhead="clusterPodcastC2" arrowhead=none]
+
+	"PodcastC2"->"PodcastC3" [constraint=false]
+	"PodcastC3"->"PodcastC4" [constraint=false]
+
+	subgraph "clusterPodcastC4" {
+		"Concepción y Valle"
+	 } 
+	"PodcastC4"->"Concepción y Valle" [lhead="clusterPodcastC4" arrowhead=none]
+
+	"PodcastC4"->"PodcastC5" [constraint=false]
+	"PodcastC5"->"HerramientasA1" [constraint=false]
+
+	subgraph "clusterHerramientasA1" {
+		"Adame Delrío S.A."
+	 } 
+	"HerramientasA1"->"Adame Delrío S.A." [lhead="clusterHerramientasA1" arrowhead=none]
+
+	"HerramientasA1"->"HerramientasA2" [constraint=false]
+	"HerramientasA2"->"HerramientasA3" [constraint=false]
+
+	subgraph "clusterHerramientasA3" {
+		"Anguiano Escalante e Hijos"
+	 } 
+	"HerramientasA3"->"Anguiano Escalante e Hijos" [lhead="clusterHerramientasA3" arrowhead=none]
+
+	"HerramientasA3"->"HerramientasA4" [constraint=false]
+
+	subgraph "clusterHerramientasA4" {
+		"Almaraz Espinal S.L."
+	 } 
+	"HerramientasA4"->"Almaraz Espinal S.L." [lhead="clusterHerramientasA4" arrowhead=none]
+
+	"HerramientasA4"->"HerramientasA5" [constraint=false]
+	"HerramientasA5"->"HerramientasB1" [constraint=false]
+	"HerramientasB1"->"HerramientasB2" [constraint=false]
+	"HerramientasB2"->"HerramientasB3" [constraint=false]
+	"HerramientasB3"->"HerramientasB4" [constraint=false]
+	"HerramientasB4"->"HerramientasB5" [constraint=false]
+
+	subgraph "clusterHerramientasB5" {
+		"Barrera Hermanos"->"Batista Vélez e Hijos" [arrowhead=rnormal]
+		"Batista Vélez e Hijos"->"Barrera Hermanos" [arrowhead=rnormal]
+	 } 
+	"HerramientasB5"->"Barrera Hermanos" [lhead="clusterHerramientasB5" arrowhead=none]
+
+	"HerramientasB5"->"HerramientasC1" [constraint=false]
+	"HerramientasC1"->"HerramientasC2" [constraint=false]
+
+	subgraph "clusterHerramientasC2" {
+		"Casárez Pacheco Hermanos"->"Carrasquillo S.A." [arrowhead=rnormal]
+		"Carrasquillo S.A."->"Casárez Pacheco Hermanos" [arrowhead=rnormal]
+	 } 
+	"HerramientasC2"->"Casárez Pacheco Hermanos" [lhead="clusterHerramientasC2" arrowhead=none]
+
+	"HerramientasC2"->"HerramientasC3" [constraint=false]
+	"HerramientasC3"->"HerramientasC4" [constraint=false]
+	"HerramientasC4"->"HerramientasC5" [constraint=false]
+	"HerramientasC5"->"CelularesB1" [constraint=false]
+	"CelularesB1"->"CelularesB2" [constraint=false]
+	"CelularesB2"->"CelularesB3" [constraint=false]
+	"CelularesB3"->"CelularesB4" [constraint=false]
+	"CelularesB4"->"CelularesB5" [constraint=false]
+
+	subgraph "clusterCelularesB5" {
+		"Bayoneta"
+	 } 
+	"CelularesB5"->"Bayoneta" [lhead="clusterCelularesB5" arrowhead=none]
+
+
+}
