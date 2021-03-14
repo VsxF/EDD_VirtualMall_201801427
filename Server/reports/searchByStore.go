@@ -3,7 +3,7 @@ package reports
 import (
 	"strings"
 	"strconv"
-	"../data"
+	data "../data/stores"
 )
 
 func GetSearchByStore(reqstore *data.Vstore, vector *data.Vector) string {

@@ -3,7 +3,7 @@ package reports
 import (
 	"strings"
 	"strconv"
-	"../data"
+	data "../data/stores"
 )
 
 func DeleteStore(store *data.Vstore, vector *data.Vector) string {

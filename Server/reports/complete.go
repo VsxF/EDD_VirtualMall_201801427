@@ -3,7 +3,7 @@ package reports
 import (
 	"fmt"
 	"os/exec"
-	"../data"
+	data "../data/stores"
 )
 
 func GetComplete(vector *data.Vector) {
@@ -15,7 +15,7 @@ func GetComplete(vector *data.Vector) {
 	content += "\n}"
 
 	CreateFile(File{"pv", content, ".dot"})
-	exec.Command("dot", "-Tpng", "pv.dot", "-o", "pv.png").Run()
+	exec.Command("dot", "-Tpdf", "pv.dot", "-o", "pv.pdf").Output()
 	//fmt.Println(vector)
 }
 

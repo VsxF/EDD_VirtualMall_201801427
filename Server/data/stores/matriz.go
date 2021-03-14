@@ -27,6 +27,7 @@ type StoreMatriz struct {
 	Desc    string `json:"Descripcion"`
 	Contact string `json:"Contacto"`
 	Qualifi int    `json:"Calificacion"`
+	Logo string `json:"Logo"`
 }
 
 func NewData() *Data {

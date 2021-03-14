@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./data"
+	data "./data/stores"
 	"./host"
 )
 

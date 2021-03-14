@@ -111,15 +111,15 @@ func (mt *AuxMatrix) SetStoresAux(idVector string, dept string, storeinfo []Stor
 
 			switch str.Qualifi {
 			case 1:
-				node1.Stores.setStore(str.Name, str.Desc, str.Contact, str.Qualifi, dept)
+				node1.Stores.setStore(str.Name, str.Desc, str.Contact, str.Qualifi, dept, str.Logo)
 			case 2:
-				node2.Stores.setStore(str.Name, str.Desc, str.Contact, str.Qualifi, dept)
+				node2.Stores.setStore(str.Name, str.Desc, str.Contact, str.Qualifi, dept, str.Logo)
 			case 3:
-				node3.Stores.setStore(str.Name, str.Desc, str.Contact, str.Qualifi, dept)
+				node3.Stores.setStore(str.Name, str.Desc, str.Contact, str.Qualifi, dept, str.Logo)
 			case 4:
-				node4.Stores.setStore(str.Name, str.Desc, str.Contact, str.Qualifi, dept)
+				node4.Stores.setStore(str.Name, str.Desc, str.Contact, str.Qualifi, dept, str.Logo)
 			case 5:
-				node5.Stores.setStore(str.Name, str.Desc, str.Contact, str.Qualifi, dept)
+				node5.Stores.setStore(str.Name, str.Desc, str.Contact, str.Qualifi, dept, str.Logo)
 			default:
 				fmt.Println("error: ubiacion " + idVector + dept + strconv.Itoa(str.Qualifi) + " tienda: " + str.Name)
 				fmt.Println("No se encontre calificacion")

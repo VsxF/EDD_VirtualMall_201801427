@@ -3,7 +3,7 @@ package reports
 import (
 
 	"strconv"
-	"../data"
+	data "../data/stores"
 )
 
 func GetSearchByPosition(position int, vector data.Vector) string {

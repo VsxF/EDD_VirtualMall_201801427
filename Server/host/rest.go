@@ -9,11 +9,13 @@ import (
 	"strconv"
 	"strings"
 	"github.com/gorilla/mux"	
-	"../data"
+	data "../data/stores"
+	products "../data/products"
 	"../reports"
 )
 
 var MainVector *data.Vector
+var MainInventory *products.Inventarios
 
 func Request() {
 	fmt.Println("Listening And Serving ...")
@@ -23,6 +25,7 @@ func Request() {
 	myrouter.HandleFunc("/TiendaEspecifica", searchByName).Methods("POST")
 	myrouter.HandleFunc("/id/{id}", searchByPosition).Methods("GET")
 	myrouter.HandleFunc("/Eliminar", deleteStore).Methods("POST")
+	myrouter.HandleFunc("/setInventarios", setInventarios).Methods("POST")
 	log.Fatal(http.ListenAndServe(":3000", myrouter))
 }
 
@@ -33,17 +36,18 @@ func setStores(w http.ResponseWriter, r *http.Request) {
 	err := json.Unmarshal(body, &response)
 	Error(err)
 	if err == nil {
-		if len(MainVector.Vector) == 0 {
-			MainVector.GetVector(response)
-		} else {
-			auxVector := data.NewVector()
-			auxVector.GetVector(response)
+		// if len(MainVector.Vector) == 0 {
+		// 	MainVector.GetVector(response)
+		// } else {
+		// 	auxVector := data.NewVector()
+		// 	auxVector.GetVector(response)
 	
-			//reports.SaveVector(*auxVector)
+		// 	//reports.SaveVector(*auxVector)
 	
-			MainVector = data.JoinVectors(*MainVector, *auxVector)
-		}
-		
+		// 	MainVector = data.JoinVectors(*MainVector, *auxVector)
+		// }
+
+		MainVector.GetVector(response)
 		reports.SaveVector(*MainVector)
 		fmt.Fprintf(w, "Seted")
 		fmt.Println("Seted")
@@ -99,8 +103,23 @@ func deleteStore(w http.ResponseWriter, r *http.Request) {
 	}	
 }
 
-func Error(err error) {
+func setInventarios(w http.ResponseWriter, r *http.Request) {
+	body ,_ := ioutil.ReadAll(r.Body)
+	response := products.NewInventarios()
+	err := json.Unmarshal(body, &response)
+
+	if !Error(err) {
+		MainInventory = response
+
+		fmt.Println("Seted")
+		fmt.Fprintf(w, "Seted")
+	}
+}
+
+func Error(err error) bool {
 	if err != nil {
 		fmt.Println("error:", err)
+		return true
 	}
+	return false
 }

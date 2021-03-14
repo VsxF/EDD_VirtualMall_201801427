@@ -2,7 +2,7 @@ package reports
 
 import (
 	"encoding/json"
-	"../data"
+	data "../data/stores"
 )
 
 func SaveVector(vector data.Vector) {

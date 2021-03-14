@@ -10,6 +10,7 @@ type Vstore struct {
 	Contact       string `json:"Contacto"`
 	Qualification int `json:"Calificacion"`
 	Department    string `json:"Departamento"`
+	Logo string `json:"Logo"`
 }
 
 type Stores struct {
@@ -27,8 +28,8 @@ func NewStoresList() *Stores {
 }
 
 //Insertar nueva tienda
-func (stores *Stores) setStore(name string, description string, contact string, qualification int, dep string) {
-	newStore := &Vstore{nil, nil, name, description, contact, qualification, dep}
+func (stores *Stores) setStore(name string, description string, contact string, qualification int, dep string, logo string) {
+	newStore := &Vstore{nil, nil, name, description, contact, qualification, dep, logo}
 
 	if stores.Start == nil {
 		stores.Start = newStore
