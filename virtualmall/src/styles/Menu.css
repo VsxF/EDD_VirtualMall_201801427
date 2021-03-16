@@ -1,0 +1,31 @@
+.bar {
+    width: 100%;
+    height: 100%;
+    background: rgb(92, 92, 92);
+    list-style-type: none;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.item {
+    display: inline-block;
+    margin: 20px;
+    color: white;
+    font-size: 25px;
+}
+
+.item:hover {
+    font-size: 40px;
+    background-color: rgb(156, 37, 180);
+    font-weight: bold;
+    border-radius: 10px;
+    margin: 0px;
+    padding: 20px; 
+    vertical-align: sub;  
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}

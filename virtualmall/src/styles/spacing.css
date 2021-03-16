@@ -1,0 +1,28 @@
+.content {
+    height: 100%;
+    margin-top: 4%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.midspace {
+    display: inline-block;
+    padding: 5px;
+    width: 50%;
+    height: 150px;
+}
+
+/* Varios estilos */
+.buttonS {
+    margin: 20px;
+    padding: 15px;
+}

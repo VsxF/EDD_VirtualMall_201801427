@@ -8,7 +8,8 @@ import (
 	"io/ioutil"
 	"strconv"
 	"strings"
-	"github.com/gorilla/mux"	
+	"github.com/gorilla/mux"
+	//"github.com/gorilla/handlers"	
 	data "../data/stores"
 	products "../data/products"
 	"../reports"
@@ -19,39 +20,41 @@ var MainInventory *products.Inventarios
 
 func Request() {
 	fmt.Println("Listening And Serving ...")
+
 	myrouter := mux.NewRouter().StrictSlash(true)
-	myrouter.HandleFunc("/cargartienda", setStores).Methods("POST")
+	myrouter.HandleFunc("/cargartienda", setStores).Methods("POST", "OPTIONS")
+	myrouter.HandleFunc("/getTiendas", getStores).Methods("GET", "OPTIONS")
 	myrouter.HandleFunc("/getArreglo", getArreglo).Methods("GET")
 	myrouter.HandleFunc("/TiendaEspecifica", searchByName).Methods("POST")
 	myrouter.HandleFunc("/id/{id}", searchByPosition).Methods("GET")
 	myrouter.HandleFunc("/Eliminar", deleteStore).Methods("POST")
 	myrouter.HandleFunc("/setInventarios", setInventarios).Methods("POST")
-	log.Fatal(http.ListenAndServe(":3000", myrouter))
+
+
+	log.Fatal(http.ListenAndServe(":3000", (myrouter)))
 }
 
 //Ingrsa las tiendas POST
 func setStores(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	body, _ := ioutil.ReadAll(r.Body)
+	fmt.Println(body)
 	var response data.Data
 	err := json.Unmarshal(body, &response)
 	Error(err)
 	if err == nil {
-		// if len(MainVector.Vector) == 0 {
-		// 	MainVector.GetVector(response)
-		// } else {
-		// 	auxVector := data.NewVector()
-		// 	auxVector.GetVector(response)
-	
-		// 	//reports.SaveVector(*auxVector)
-	
-		// 	MainVector = data.JoinVectors(*MainVector, *auxVector)
-		// }
-
+		MainVector = data.NewVector()
 		MainVector.GetVector(response)
 		reports.SaveVector(*MainVector)
 		fmt.Fprintf(w, "Seted")
 		fmt.Println("Seted")
 	}
+}
+
+func getStores(w http.ResponseWriter, r *http.Request) {
+	aux ,_ := json.Marshal(MainVector)
+	fmt.Fprintf(w, string(aux))
+	fmt.Println(string(aux))
 }
 
 func getArreglo(w http.ResponseWriter, r *http.Request) {
@@ -114,6 +117,10 @@ func setInventarios(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Seted")
 		fmt.Fprintf(w, "Seted")
 	}
+}
+
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
 
 func Error(err error) bool {

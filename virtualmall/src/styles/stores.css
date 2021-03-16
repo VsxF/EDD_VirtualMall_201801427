@@ -1,0 +1,28 @@
+@import "spacing.css";
+
+.storesContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    background-color: rgba(0, 128, 0, 0.1);
+}
+
+.store {
+    width: 18%;
+    padding: 5%;
+    margin: 2%;   
+}
+
+.store:hover {
+    background-color: rgba(0, 128, 0, 0.3);
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+}

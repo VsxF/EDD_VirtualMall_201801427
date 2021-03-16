@@ -1,0 +1,12 @@
+@import "spacing.css";
+
+.dropBox {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}
+
+.radio {
+    display: inline-block;
+    margin: 20px;
+}
