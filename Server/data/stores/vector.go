@@ -7,7 +7,7 @@ import (
 
 func (vector *Vector) GetVector(data Data) {
 	fmt.Println()
-	if data.Data != nil {	
+	if data.Data != nil {
 		matrix := NewMatrix()
 		data.byQualification()
 		matrix.SetDataMatrix(data, vector.Alldepartments)
@@ -16,7 +16,7 @@ func (vector *Vector) GetVector(data Data) {
 }
 
 type Vector struct {
-	Vector []NodeVector
+	Vector         []NodeVector
 	Alldepartments *AllDepartments
 }
 
@@ -43,12 +43,12 @@ func (node *NodeVector) setNodeVector(id string, str *Stores) {
 func (v *Vector) setVector(matrix *AuxMatrix, alldepartments *AllDepartments) {
 	for i := 0; i < len(alldepartments.Department); i++ {
 		_allDepartment := strings.ToLower(alldepartments.Department[i])
-		
+
 		for j := 0; j < len(matrix.Matrix); j++ {
 			matrixDepartment := strings.ToLower(matrix.Matrix[j].Department)
-			
+
 			if strings.Contains(matrixDepartment, _allDepartment) {
-				v.addToVector(matrix, &j)		
+				v.addToVector(matrix, &j)
 			}
 		}
 	}
@@ -63,7 +63,7 @@ func (vector *Vector) addToVector(matrixx *AuxMatrix, index *int) {
 	n2 := NodeVector{matrix[*index].Vector[2].ID, matrix[*index].Vector[2].Stores}
 	n3 := NodeVector{matrix[*index].Vector[3].ID, matrix[*index].Vector[3].Stores}
 	n4 := NodeVector{matrix[*index].Vector[4].ID, matrix[*index].Vector[4].Stores}
-	
+
 	auxIndex := *index + 1
 	if *index == 0 {
 		matrixx.Matrix = matrixx.Matrix[auxIndex:]
@@ -76,7 +76,6 @@ func (vector *Vector) addToVector(matrixx *AuxMatrix, index *int) {
 
 	vector.Vector = append(vector.Vector, []NodeVector{n0, n1, n2, n3, n4}...)
 }
-
 
 //Une y Ordena 2 vectores
 // func JoinVectors(vector, second *Vector) *Vector {

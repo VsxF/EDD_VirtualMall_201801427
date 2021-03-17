@@ -10,7 +10,9 @@ func main() {
 	data, _ := data.Dataa()
 	
 	vector.GetVector(data)
+
+	vector.AuxSetInventrorys()
 	host.MainVector = vector
-	
+
 	host.Request()	
 }

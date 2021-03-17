@@ -1,22 +1,23 @@
 package host
 
 import (
-	"fmt"
-	"log"
 	"encoding/json"
-	"net/http"
+	"fmt"
 	"io/ioutil"
+	"log"
+	"net/http"
 	"strconv"
 	"strings"
-	"github.com/gorilla/mux"
-	//"github.com/gorilla/handlers"	
+
+	"../data/products"
 	data "../data/stores"
-	products "../data/products"
 	"../reports"
+	"github.com/go-extras/tahwil"
+	"github.com/gorilla/mux"
 )
 
 var MainVector *data.Vector
-var MainInventory *products.Inventarios
+var MainInventory *products.InventorysJSON
 
 func Request() {
 	fmt.Println("Listening And Serving ...")
@@ -29,7 +30,6 @@ func Request() {
 	myrouter.HandleFunc("/id/{id}", searchByPosition).Methods("GET")
 	myrouter.HandleFunc("/Eliminar", deleteStore).Methods("POST")
 	myrouter.HandleFunc("/setInventarios", setInventarios).Methods("POST")
-
 
 	log.Fatal(http.ListenAndServe(":3000", (myrouter)))
 }
@@ -52,9 +52,10 @@ func setStores(w http.ResponseWriter, r *http.Request) {
 }
 
 func getStores(w http.ResponseWriter, r *http.Request) {
-	aux ,_ := json.Marshal(MainVector)
-	fmt.Fprintf(w, string(aux))
-	fmt.Println(string(aux))
+	v, _ := tahwil.ToValue(MainVector)
+	res, _ := json.Marshal(v) 
+
+	fmt.Fprintf(w, string(res))
 }
 
 func getArreglo(w http.ResponseWriter, r *http.Request) {
@@ -65,7 +66,7 @@ func getArreglo(w http.ResponseWriter, r *http.Request) {
 
 func searchByName(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
-	
+
 	response := data.NewVstore()
 	err := json.Unmarshal(body, &response)
 	Error(err)
@@ -78,7 +79,7 @@ func searchByName(w http.ResponseWriter, r *http.Request) {
 }
 
 func searchByPosition(w http.ResponseWriter, r *http.Request) {
-	url := []byte(r.URL.Path)	
+	url := []byte(r.URL.Path)
 	idURL := string(url[4:])
 	id, err := strconv.Atoi(idURL)
 	Error(err)
@@ -93,7 +94,7 @@ func searchByPosition(w http.ResponseWriter, r *http.Request) {
 func deleteStore(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
 	auxBody := strings.ReplaceAll(string(body), "\"Categoria\":", "\"Departamento\":")
-	
+
 	response := data.NewVstore()
 	err := json.Unmarshal([]byte(auxBody), &response)
 	Error(err)
@@ -103,12 +104,12 @@ func deleteStore(w http.ResponseWriter, r *http.Request) {
 		reports.SaveVector(*MainVector)
 		fmt.Fprintf(w, result)
 		fmt.Println(result)
-	}	
+	}
 }
 
 func setInventarios(w http.ResponseWriter, r *http.Request) {
-	body ,_ := ioutil.ReadAll(r.Body)
-	response := products.NewInventarios()
+	body, _ := ioutil.ReadAll(r.Body)
+	response := products.NewInventorys()
 	err := json.Unmarshal(body, &response)
 
 	if !Error(err) {

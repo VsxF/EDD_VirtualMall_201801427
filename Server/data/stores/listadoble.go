@@ -1,6 +1,9 @@
 package data
 
-import "strings"
+import (
+	"strings"
+	"../products"
+)
 
 type Vstore struct {
 	Previous      *Vstore
@@ -11,6 +14,7 @@ type Vstore struct {
 	Qualification int `json:"Calificacion"`
 	Department    string `json:"Departamento"`
 	Logo string `json:"Logo"`
+	Products *products.Tree `json:"Productos"`
 }
 
 type Stores struct {
@@ -29,7 +33,7 @@ func NewStoresList() *Stores {
 
 //Insertar nueva tienda
 func (stores *Stores) setStore(name string, description string, contact string, qualification int, dep string, logo string) {
-	newStore := &Vstore{nil, nil, name, description, contact, qualification, dep, logo}
+	newStore := &Vstore{nil, nil, name, description, contact, qualification, dep, logo, products.NewTree()}
 
 	if stores.Start == nil {
 		stores.Start = newStore

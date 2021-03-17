@@ -9,7 +9,7 @@ function Menu() {
     return (
         <div className="bar">
             <div className="item" onClick={() => redirect()} >Virtual Mall</div>
-            <div className="item" onClick={() => redirect(1)} >Stores</div>
+            <div className="item" onClick={() => redirect(1)} >Tiendas</div>
             <div className="item" onClick={() => redirect(4)} >Datos</div>
         </div>
     )

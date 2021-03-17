@@ -1,19 +1,17 @@
 package products
 
-import "fmt"
-
-type Inventarios struct {
-	Inventarios []Store `json:"Inventarios"`
+type InventorysJSON struct {
+	Inventorys []StoreJSON `json:"Inventarios"`
 }
 
-type Store struct {
-	Store string `json:"Tienda"`
+type StoreJSON struct {
+	Name string `json:"Tienda"`
 	Department string `json:"Departamento"`
 	Qualif int `json:"Calificacion"`
-	Products []Product `json:"Productos"`
+	Products []ProductJSON `json:"Productos"`
 }
 
-type Product struct {
+type ProductJSON struct {
 	Name string `json:"Nombre"`
 	Code int `json:"Codigo"`
 	Desc string `json:"Descripcion"`
@@ -22,18 +20,14 @@ type Product struct {
 	Image string `json:"Imagen"`
 }
 
-func NewInventarios() *Inventarios {
-	return &Inventarios{}
+func NewInventorys() *InventorysJSON {
+	return &InventorysJSON{}
 }
 
-func NewStore() *Store {
-	return &Store{}
+func NewStore() *StoreJSON {
+	return &StoreJSON{}
 }
 
-func NewProduct() *Product {
-	return &Product{}
-}
-
-func ma() {
-	fmt.Println("prodcuts")
+func NewProduct() *ProductJSON {
+	return &ProductJSON{}
 }

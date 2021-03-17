@@ -59,7 +59,7 @@ func Dataa() (Data, []byte) {
 	if err != nil {
 		fmt.Println("error: ", err)
 	} else if err2 != nil {
-		fmt.Println("error: ", err)
+		fmt.Println("error: ", err2)
 	} else {
 		fmt.Println(">>matrix loaded<<")
 	}

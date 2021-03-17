@@ -1,25 +1,8 @@
 import axios from 'axios'
 
-const base = "localhost:3000/"
-axios.baseURL = 'http://localhost:3000/'
 class api {
 
-    constructor() {
-        
-    }
-
     async setStores(info) {
-        // axios.post(base + "cargartienda", { 
-        //     "headers": {
-        //         "content-type": "application/json",
-        //         },
-
-        // })
-        // .then(res => {
-        //     console.log(res)
-        //     return "a"
-        // })
-        console.log(info)
         axios({
             url: "cargartienda",
             method: 'post',
