@@ -2,7 +2,11 @@ package data
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
+
+	p "../products"
+	c "../cart"
 )
 
 func (vector *Vector) GetVector(data Data) {
@@ -72,97 +76,74 @@ func (vector *Vector) addToVector(matrixx *AuxMatrix, index *int) {
 	} else {
 		matrixx.Matrix = matrixx.Matrix[:auxIndex-1]
 	}
-	*index = -1
-
 	vector.Vector = append(vector.Vector, []NodeVector{n0, n1, n2, n3, n4}...)
 }
 
-//Une y Ordena 2 vectores
-// func JoinVectors(vector, second *Vector) *Vector {
-// 	response := NewVector()
-// 	j := 0
-// 	i := 0
-// 	response.mapVectors(vector, second, &i, &j)
-// 	fmt.Println(response)
-// 	return response
-// }
+//????????????????????????????????????
+//UPDATA VECTOR
+//actualizar la cantidad de una tienda
+//El producto trae en el nodo izq la informacion de la tienda y el dep
+var correct = false
 
-// func (response *Vector) mapVectors(vector, second *Vector, i, j *int) {
-// 	_, index := getIDnIndex(*vector)
-// 	_, index2 := getIDnIndex(*second)
+func (vector *Vector) UpdateQuant(cart *c.Cart) bool {
+	for i := 0; i < len(cart.Products); i++ {
+		vector.mapIndexx(cart.Products[i])
+	}
+	return correct
+}
 
-// 	if index < 97 && len(second.Vector) != 0 {
-// 		response.addItem(second)
-// 		//response.mapVectors(vector, second, i, j)
-// 	} else if index2 < 97 && len(vector.Vector) != 0 {
-// 		response.addItem(vector)
-// 	} else if index == index2 {
-// 		a := getDepsIndex(*vector, index2)
-// 		response.mergeIndex(vector, second, a)
-// 	} else if index < index2 {
-// 		response.addItem(vector)
-// 	} else if index2 < index {
-// 		response.addItem(second)
-// 	}
+func (vector *Vector) mapIndexx(product *p.Product) {
+	for i := 0; i < len(vector.Vector); i++ {
+		id := strings.ToLower(vector.Vector[i].ID)
+		aux := []byte(product.Left.Name)[0]
+		search := strings.ToLower(product.Left.Desc) + strings.ToLower(string(aux))
+		
+		if strings.Contains(id, search) {
+			if id == search + strconv.Itoa(product.Left.Code)   {
+				vector.mapStoresV(product, i)
+				break
+			} 	
+		} else if i%4==0 {
+			i += 5
+		}
+	}
+}
 
-// 	if len(vector.Vector) != 0 || len(second.Vector) != 0 {
-// 		response.mapVectors(vector, second, i, j)
-// 	}
-// }
+func (vector *Vector) mapStoresV(product *p.Product, i int) {
+	prev := vector.Vector[i].Stores.Lastest
+	next := vector.Vector[i].Stores.Start
+	
+	for j := 0; j < (vector.Vector[i].Stores.Size+1)/2; j++ {
+		if prev.Name == product.Left.Name {
+			mapProducts(prev.Products, product)
+			break
+		}
+		if next.Name == product.Left.Name {
+			mapProducts(next.Products, product)
+			break
+		}
+		prev = prev.Previous
+		next = next.Next
+	}
+}
 
-// func (vector *Vector) addItem(slices *Vector) {
-// 	vector.Vector = append(vector.Vector, slices.Vector[0], slices.Vector[1], slices.Vector[2], slices.Vector[3], slices.Vector[4])
-// 	slices.Vector = slices.Vector[5:]
-// }
 
-// func (response *Vector) mergeIndex(first, second *Vector, deptsFirst []string) {
-// 	_, index := getIDnIndex(*first)
-// 	id2, index2 := getIDnIndex(*second)
-// 	added := false
+func mapProducts(products *p.Tree, product *p.Product) {
+	inOrder(products.Root, product)
+}
 
-// 	for i := 0; i < len(deptsFirst); i++ {
-// 		if strings.Contains(id2, strings.ToLower(deptsFirst[i])) {
-// 			//merge stores
-// 			deptsFirst[i] = ""
-// 			added = true
-// 			break
-// 		}
-// 	}
-
-// 	if !added {
-// 		first.appendDeptIndex(second)
-// 	}
-
-// 	if index == index2 {
-// 		response.mergeIndex(first, second, deptsFirst)
-// 	}
-// }
-
-// func (vector *Vector) appendDeptIndex(slices *Vector) {
-// 	a := []NodeVector{ slices.Vector[0], slices.Vector[1], slices.Vector[2], slices.Vector[3], slices.Vector[4] }
-// 	vector.Vector = append(a, vector.Vector[0:]...)
-// 	slices.Vector = slices.Vector[5:]
-// }
-
-// func getDepsIndex(vector Vector, index byte) []string {
-// 	var resp []string
-// 	for i := 0; i < len(vector.Vector); i++ {
-// 		id := strings.ToLower(vector.Vector[i].ID)
-// 		if strings.Contains(id, string(index)) {
-// 			resp = append(resp, id)
-// 		} else {
-// 			break
-// 		}
-// 	}
-// 	return resp
-// }
-
-// func getIDnIndex(vector Vector) (string, byte) {
-// 	id := ""
-// 	index := []byte("^")[0]
-// 	if len(vector.Vector) > 0 {
-// 		id = strings.ToLower(vector.Vector[0].ID)
-// 		index = []byte(id)[len(id) - 2]
-// 	}
-// 	return id, index
-// }
+func inOrder(products *p.Product, product *p.Product) {
+	if products.Left != nil {
+		inOrder(products.Left, product)
+	}
+	
+	if products.Name == product.Name {
+		if products.Quant - product.Quant > 0 {
+			products.Quant = products.Quant - product.Quant
+			correct = true
+		}
+		correct = false
+	} else if products.Right != nil {
+		inOrder(products.Right, product)
+	}
+}

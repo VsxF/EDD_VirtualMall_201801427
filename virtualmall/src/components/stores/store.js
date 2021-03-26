@@ -16,7 +16,7 @@ export default class Store extends React.Component {
     render() {
         let logo = this.getValue(this.props.store.Logo)
         let name = this.getValue(this.props.store.Nombre)
-        
+        console.log(this.props.store)
         return (
             <div className="store" onClick={this.goToStores }>
                 <img src={logo} alt="Logo" className="image" />
@@ -27,7 +27,13 @@ export default class Store extends React.Component {
     }
 
     goToStores() {
-        ReactDOM.render(<Products products={this.state.products} />, document.getElementById("content"));
+        let aux = {
+            Descripcion: this.getValue(this.props.store.Departamento),
+            Nombre: this.getValue(this.props.store.Nombre),
+            Codigo: this.props.store.Calificacion.value
+        }
+       
+        ReactDOM.render(<Products products={this.state.products} storeInfo={aux} />, document.getElementById("content"));
     }
 
     getValue(node) {

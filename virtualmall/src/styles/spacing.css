@@ -1,6 +1,6 @@
 .content {
     height: 100%;
-    margin-top: 4%;
+    margin-top: 2%;
     margin-left: 10%;
     margin-right: 10%;
 }
@@ -25,4 +25,11 @@
 .buttonS {
     margin: 20px;
     padding: 15px;
+}
+
+.clickableText {
+        background-color: Transparent;
+        background-repeat:no-repeat;
+        border: none;
+        outline: none;
 }

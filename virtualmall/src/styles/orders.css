@@ -1,0 +1,194 @@
+@import "./spacing.css";
+
+:root {
+    --greenBackground: rgba(12, 116, 81, 0.651);
+    --grenHeader: rgba(1, 77, 51, 0.651);
+    --greenNode: rgba(1, 119, 78, 0.651);
+    --grayBackground: rgba(103, 104, 103, 0.363);
+}
+
+/* ORDERS */
+.ordersContainer {
+    height: 100%;
+    /* margin-top: 2%; */
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.information {
+    display: flex;
+}
+
+/* YEAR */
+
+.yearsContainer {
+    background-color: var(--grayBackground);
+    width: 25%;
+    height: 70vh;
+    border-radius: 20px;
+}
+
+.year {
+    margin-left: 4%;
+    margin-top: 10%;
+    font-family: "Monaco", monospace;
+    font-size: 18px;
+}
+
+.yearOpen {
+    display: flex;
+    color: white;
+    margin-left: 5%;
+    margin-top: 2%;
+    margin-left: 15%;
+    font-family: "Monaco", monospace;
+    font-size: 18px;
+  }
+
+.yearMonth {
+    display: flex;
+    color: white;
+}
+
+/* MONTH */
+
+.monthTitle {
+    margin-top: -3%;
+    margin-left: 25%;
+}
+
+.monthContainer {
+    background-color: var(--greenBackground);
+    margin-left: 2%;
+    width: 100%;
+    height: 70vh;
+    border-radius: 5px;
+    color: white;
+    display: grid;
+    /* flex-direction: row;
+    flex-wrap: nowrap; */
+    /* flex-basis: content; */
+    overflow: auto;
+}
+
+.monthTable {
+    margin: 5px;
+    border-collapse: separate;
+    border-spacing: 10px;
+    /* width: 200%; */
+    /* height: 100%; */
+}
+
+.monthNode {
+    max-width: 10px;
+    height: 10vh;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.monthGreenHeader {
+    background-color: var(--grenHeader);
+}
+
+.monthGreenNode {
+    background-color: var(--greenNode);
+}
+
+/* ?????????????????????????????? */
+/* Buttons */
+.buttonsContainer {
+    width: 20%;
+    margin-top: 2%;
+    height:40vh;
+    margin-bottom: 5%;
+}
+
+.buttonOrders {
+    margin: 5%;
+    margin-bottom: 1%;
+    width: 90%;
+    height: 18%;
+    border-radius: 15px;
+    background-color: rgba(22, 117, 155, 0.849);
+    outline: none;
+    color: white;
+    border-color: var(--greenNode);
+    font-size: 18px;
+}
+
+.buttonOrders:hover {
+    background-color: rgb(4, 157, 218, 0.849);
+}
+
+/* ??????????????????????????????? */
+/* ProductInfo */
+.infoContainer {
+    width: 78%;
+    height: 40vh;
+    margin-left: 2%;
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+
+.tableInfo {
+    margin: 1%;
+    text-align: center;
+    table-layout: auto;
+}
+
+.tableBorder{
+    width: 95%;
+    height: 84%;
+    margin: 1%;
+    padding: 1%;
+    border: purple;
+    border-style: ridge;
+    border-radius:20px;
+    overflow: auto;
+}
+
+.tableBorder::-webkit-scrollbar {
+    width: 0;
+    display: none;
+}
+
+.theadInfo{
+    background: var(--greenNode);
+    /* border-radius: 1px; */
+    /* padding: 10px; */
+    /* margin: 2%; */
+}
+
+.theadInfo th{ 
+    border-bottom: 3px solid var(--grenHeader);
+    border-right: 3px solid var(--grenHeader);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+}
+
+.tbodyInfo {
+    /* display: block; */
+    overflow: scroll;
+}
+
+.tbodyInfo td {
+    padding: 0;
+}
+
+.tableRigthText {
+    margin-right: 10px;
+    text-align: right;
+    font-weight: bolder;
+    font-size: 24px;
+    text-decoration: underline;
+}
+
+.tableButtonText {
+    margin-left: 10px;
+    text-align: left;
+    font-weight: bolder;
+    font-size: 24px;
+    text-decoration: underline;
+}
+

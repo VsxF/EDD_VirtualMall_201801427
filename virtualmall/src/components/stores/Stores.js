@@ -14,7 +14,11 @@ export default class Stores extends React.Component {
 
     async componentDidMount() {
         let stores = await Api.getStores()
-        this.mapDepartments(stores)
+        stores = this.getValue(stores)
+        if (stores !== null) {
+            this.mapDepartments(stores)
+        }
+       
         //console.log(stores)
     }
 
@@ -32,9 +36,7 @@ export default class Stores extends React.Component {
     mapDepartments(stores) {
         let list = []
         if (stores.length !== 0) {
-            let aux = stores
-            aux = this.getValue(aux)
-            aux = this.getValue(aux.Vector)
+            let aux = this.getValue(stores.Vector)
             
             aux.map((stores, key) => {
                 stores = this.getValue(stores)
@@ -53,7 +55,7 @@ export default class Stores extends React.Component {
         let list = []
         let store = stores.Start
         store = this.getValue(store)
-
+        
         for (let i = 0; i < stores.Size.value; i++) {
             if (store !== null) {
                 let aux = this.getValue(store.Nombre) + store.Calificacion.value

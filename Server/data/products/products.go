@@ -27,7 +27,3 @@ func NewInventorys() *InventorysJSON {
 func NewStore() *StoreJSON {
 	return &StoreJSON{}
 }
-
-func NewProduct() *ProductJSON {
-	return &ProductJSON{}
-}

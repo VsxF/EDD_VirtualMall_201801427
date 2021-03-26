@@ -1,101 +1,98 @@
-package products
+package orders
+//import "fmt"
 
-type Product struct {
-	Left *Product `json:"Left"`
-	Right *Product
-	balance int 
-	Name string `json:"Nombre"`
-	Code int `json:"Codigo"`
-	Desc string `json:"Descripcion"`
-	Price int `json:"Precio"`
-	Quant int `json:"Cantidad"`
-	Image string `json:"Imagen"`
-	
+type Year struct {
+	Left *Year
+	Right *Year
+	balance int
+	Year int
+	Months *Months
 }
 
-type Tree struct {
-	Root *Product 
-	Size int 
+type Calendar struct {
+	Root *Year
+	Size int
 }
 
-func NewTree() *Tree {
-	return &Tree{nil, 0}
+func NewCalendar() *Calendar {
+	return &Calendar{nil, 0}
 }
-
-// func NewProduct(name string, code int, desc string, price, quant int, image string) *Product{
-// 	return &Product{nil, nil, 0, name, code, desc, price, quant, image}
-// }
 
 var already bool
 
-func (tree *Tree) InsertProduct(name string, code int, desc string, price, quant int, image string) bool {
-	new := &Product{nil, nil, 0, name, code, desc, price, quant, image}
-	
+func (tree *Calendar) InsertYear(year int, months *Months) bool {
+	new := &Year{nil, nil, 0, year, months}
 	already = false
-	
 	if tree.Root == nil {
 		tree.Root = new
 		tree.Size++
 	} else {
-		insertProduct(tree, tree.Root, new)
+		insertYear(tree, tree.Root, new)
 		return already
 	}
 	return already
 }
 
-func insertProduct(tree *Tree, root, new *Product) {
-	if new.Code > root.Code {
+func insertYear(tree *Calendar, root, new *Year) {
+	if new.Year > root.Year {
 		if root.Right == nil {
 			root.Right = new
 			tree.Size++
 		} else {
-			insertProduct(tree, root.Right, new)
+			insertYear(tree, root.Right, new)
 		}
-	} else if new.Code < root.Code {
+	} else if new.Year < root.Year {
 		if root.Left == nil {
-			tree.Size++
 			root.Left = new
+			tree.Size++
 		} else {
-			insertProduct(tree, root.Left, new)
+			insertYear(tree, root.Left, new)
 		}
-	} else if new.Code == root.Code {
+	} else if new.Year == root.Year {
+		aux := new.Months.Start
+		
+		for !aux.HasOrders {
+			aux = aux.Next
+		} 
+
+		root.Months.setMonth(aux.Month, aux.Orders)
 		already = true
 	}
 	balance(tree, root)
 }
 
-func (tree *Tree) GetProduct(code int) *Product {
-	var response = getProduct(tree.Root, code)
+func (tree *Calendar) GetYear(year int) *Year {
+	var response = getYear(tree.Root, year)
 	return response 
 }
 
-func getProduct(root *Product, code int) *Product {
+func getYear(root *Year, year int) *Year {
 	if root == nil {
 		return nil
-	} else if root.Code == code {
+	} else if root.Year == year {
 		return root
 	} else {
-		var value1 *Product
-		if code > root.Code {
-			value1 = getProduct(root.Right, code)
-		} else if code < root.Code {
-			value1 = getProduct(root.Left, code)
+		var value1 *Year
+		if year > root.Year {
+			value1 = getYear(root.Right, year)
+		} else if year < root.Year {
+			value1 = getYear(root.Left, year)
 		}
 		return value1
 	}
 }
 
-func (tree *Tree) GetProductQuantity() int {
+func (tree *Calendar) GetYearQuantity() int {
 	return tree.Size
 }
 
 //Retornar profundidad
-func (tree *Tree) GetDepth() int {
+func (tree *Calendar) GetDepth() int {
 	depth := getDepth(tree.Root)
 	return depth
 }
 
-func getDepth(root *Product) int {
+func getDepth(root *Year) int {
 	if root == nil {
 		return 0
 	} else {
@@ -110,18 +107,18 @@ func getDepth(root *Product) int {
 	}
 }
 
-func getParent(root *Product, code int) *Product {
-	if code > root.Code {
-		if code == root.Right.Code {
+func getParent(root *Year, year int) *Year {
+	if year > root.Year {
+		if year == root.Right.Year {
 			return root
 		} else {
-			return getParent(root.Right, code)
+			return getParent(root.Right, year)
 		}
-	} else if code < root.Code {
-		if code == root.Left.Code {
+	} else if year < root.Year {
+		if year == root.Left.Year {
 			return root
 		} else {
-			return getParent(root.Left, code)
+			return getParent(root.Left, year)
 		} 
 	} else {
 		return nil
@@ -130,7 +127,7 @@ func getParent(root *Product, code int) *Product {
 
 //Rotaciones
 //Rotacion left-left
-func rotLL(tree *Tree, node1, node2 *Product) {
+func rotLL(tree *Calendar, node1, node2 *Year) {
 	node1.Left = node2.Right
 	node2.Right = node1
 
@@ -145,7 +142,7 @@ func rotLL(tree *Tree, node1, node2 *Product) {
 		node1 = node2
 		tree.Root = node2
 	} else {
-		temp := getParent(tree.Root, node1.Code)
+		temp := getParent(tree.Root, node1.Year)
 		if temp.Left == node1 {
 			temp.Left = node2
 		} else {
@@ -155,7 +152,7 @@ func rotLL(tree *Tree, node1, node2 *Product) {
 }
 
 //Rotacion Right-Right
-func rotRR(tree *Tree, node1, node2 *Product) {
+func rotRR(tree *Calendar, node1, node2 *Year) {
 	node1.Right = node2.Left
 	node1.Left = node1
 
@@ -170,7 +167,7 @@ func rotRR(tree *Tree, node1, node2 *Product) {
 		node1 = node2
 		tree.Root = node2
 	} else {
-		temp := getParent(tree.Root, node1.Code)
+		temp := getParent(tree.Root, node1.Year)
 		if temp.Left == node1 {
 			temp.Left = node2
 		} else {
@@ -180,7 +177,7 @@ func rotRR(tree *Tree, node1, node2 *Product) {
 }
 
 //Rotacion left-Right
-func rotLR(tree *Tree, node1, node2, node3 *Product) {
+func rotLR(tree *Calendar, node1, node2, node3 *Year) {
 	node1.Left = node3.Right
 	node3.Right = node1
 	node2.Right = node3.Left
@@ -203,7 +200,7 @@ func rotLR(tree *Tree, node1, node2, node3 *Product) {
 		node1 = node3
 		tree.Root = node3
 	} else {
-		temp := getParent(tree.Root, node1.Code) 
+		temp := getParent(tree.Root, node1.Year) 
 		if temp.Left == node1 {
 			temp.Left = node3
 		} else {
@@ -213,7 +210,7 @@ func rotLR(tree *Tree, node1, node2, node3 *Product) {
 }
 
 //Rotacion Right-Left
-func rotRL(tree *Tree, node1, node2, node3 *Product) {
+func rotRL(tree *Calendar, node1, node2, node3 *Year) {
 	node1.Right = node3.Left
 	node3.Left = node1
 	node2.Left = node3.Right
@@ -236,7 +233,7 @@ func rotRL(tree *Tree, node1, node2, node3 *Product) {
 		node1 = node3
 		tree.Root = node3
 	} else {
-		temp := getParent(tree.Root, node1.Code) 
+		temp := getParent(tree.Root, node1.Year) 
 		if temp.Left == node1 {
 			temp.Left = node3
 		} else {
@@ -246,7 +243,7 @@ func rotRL(tree *Tree, node1, node2, node3 *Product) {
 }
 
 //Equilibra el arbol
-func balance(tree *Tree, root *Product) {
+func balance(tree *Calendar, root *Year) {
 	left := getDepth(root.Left)
 	right := getDepth(root.Right)
 
@@ -266,19 +263,3 @@ func balance(tree *Tree, root *Product) {
 	}
 	
 }
-
-//FUNCTION DELETE IN cart.go
-
-//Disminuir cantidad
-// func updateQuant(node *Product, cantidad int) {
-// 	if node.Left != nil {
-// 		updateQuant(node.Left, cantidad)
-// 	}
-	
-// 	if node.
-
-
-// 	if node.Right != nil {
-// 		updateQuant(node.Right, cantidad)
-// 	}
-// }

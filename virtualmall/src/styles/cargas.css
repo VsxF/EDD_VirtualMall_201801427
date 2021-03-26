@@ -10,3 +10,20 @@
     display: inline-block;
     margin: 20px;
 }
+
+.message {
+    display: inline;
+    position: absolute;
+    right: 0;
+    margin-right: 10%;
+    margin-top: 1%;
+    font-size: 34px;
+}
+
+.mSucces {
+    color: rgb(7, 128, 43);
+}
+
+.mError {
+    color: rgb(145, 5, 5);
+}
